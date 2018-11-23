@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Feedbag.DataAccess.Repositories;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +11,9 @@ using Microsoft.AspNetCore.Hosting;
 using Feedbag.Pdf;
 using Feedbag.Business.Scraper;
 using Feedbag.Business.Parser;
+using Feedbag.Business.Mappers;
 using Feedbag.DataAccess.Providers;
+using Feedbag.Business.Repositories;
 
 namespace Feedbag
 {
@@ -31,13 +32,15 @@ namespace Feedbag
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             var builder = new ContainerBuilder();
-            builder.Populate(services);
-            builder.RegisterType<RecipeRepository>().As<IRecipeRepository>();      
+            builder.Populate(services);  
             builder.RegisterType<SelectPdfGenerator>().As<IPdfGenerator>();   
             builder.RegisterType<Scraper>().As<IScraper>(); 
             builder.RegisterType<RecipeParser>().As<IRecipeParser>();
             builder.RegisterType<IngredientParser>().As<IIngredientParser>();
             builder.RegisterType<SiteSettingsProvider>().As<ISiteSettingsProvider>();
+            
+            builder.RegisterType<RecipeRepository>().As<IRecipeRepository>();
+            builder.RegisterType<RecipeMapper>().As<IRecipeMapper>();
             var ApplicationContainer = builder.Build();
             
             return new AutofacServiceProvider(ApplicationContainer);

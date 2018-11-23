@@ -1,0 +1,82 @@
+[
+    {
+        "url": "www.arla.se",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//div[contains(@class,'image-box-recipe__image-container')]//img",
+            "attribute" : "src"
+        },
+        "descriptionElement" : "//div[contains(@class,'recipe-header__preamble')]//p",
+        "ingredientsElement" : "//ul[contains(@class,'recipe-ingredients')]//li",
+        "howToElement" : [
+            "//ol[contains(@class,'instructions-area__steps')]//li",
+            "//p[contains(@class,'instructions-area__text')]"
+        ]
+    },
+    {
+        "url": "www.ica.se",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//meta[contains(@property,'og:image')]",
+            "attribute": "content"
+        },
+        "descriptionElement" : "//p[contains(@class,'recipe-preamble')]",
+        "ingredientsElement" : "//ul[contains(@class,'ingredients__list')]//li",
+        "howToElement" : [
+            "//div[contains(@class,'recipe-howto-steps')]//li"
+        ]
+    },
+    {
+        "url": "recept.se",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//image[contains(@class,'photo')]",
+            "attribute": "src"
+        },
+        "descriptionElement" : null,
+        "ingredientsElement" : "//section[contains(@class,'ingredients')]//div[contains(@class,'ingredient')]",
+        "howToElement" : [
+            "//ol[contains(@class,'instructions')]//li//span"
+        ]
+    },
+    {
+        "url": "www.tasteline.com",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//div[contains(@class,'recipe-header-image')]//img",
+            "attribute": "src"
+        },
+        "descriptionElement" : "//div[contains(@class, 'recipe-ingress')]",
+        "ingredientsElement" : "//div[contains(@class,'ingredient-group')]//ul//li",
+        "howToElement" : [
+            "//div[contains(@class,'step-group')]//ul//li"
+        ]
+    },
+    {
+        "url": "www.koket.se",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//link[contains(@rel,'image_src')]",
+            "attribute": "href"
+        },
+        "descriptionElement" : "//div[contains(@class, 'description')]",
+        "ingredientsElement" : "//section[contains(@id,'ingredients')]//span[contains(@class,'ingredient')]",
+        "howToElement" : [
+            "//section[contains(@id, 'step-by-step')]//ol//li"
+        ]
+    },
+    {
+        "url": "www.hemtrevligt.se",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//img[contains(@class,'recipe-image')]",
+            "attribute": "src"
+        },
+        "descriptionElement" : null,
+        "ingredientsElement" : "//div[contains(@class,'ingredients')]//ul//li//span",
+        "howToElement" : [
+            "//div[contains(@class, 'instructions')]//div[contains(@class, 'recipe-step')]//p"
+        ]
+    }
+
+]

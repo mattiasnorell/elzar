@@ -100,22 +100,6 @@ namespace Feedbag.Business.Parser{
 
             return StripTagsRegex(replacedInput);
         }
-
-        private string GetBackgroundImage(string styles){
-            foreach(var style in styles.Split(';')){
-                var styleSplit = style.Split(':');
-
-                if(styleSplit[0] == "background-image"){
-                   
-                    var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                    foreach(Match m in linkParser.Matches(styleSplit[1])){
-                        return m.Value;
-                    };
-                } 
-            }
-
-            return null;
-        }
     }
 
 }

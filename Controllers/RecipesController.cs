@@ -9,9 +9,11 @@ using Feedbag.Business.Parser;
 using Feedbag.DataAccess.Providers;
 using Feedbag.Business.Scraper;
 using Feedbag.DataAccess.Entites;
+using Feedbag.Business.Repositories;
 using Feedbag.Models;
 using Feedbag.Pdf;
 using Microsoft.AspNetCore.Mvc;
+using Feedbag.Business.Mappers;
 
 namespace Feedbag.Controllers
 {
@@ -19,12 +21,16 @@ namespace Feedbag.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
+        private readonly IRecipeRepository recipeProvider;
+        private readonly IRecipeMapper recipeMapper;
         private readonly IPdfGenerator pdfGenerator;
         private readonly IScraper scraper;
         private readonly IRecipeParser RecipeParser;
         private readonly ISiteSettingsProvider siteSettingsProvider;
 
-        public RecipesController(IPdfGenerator pdfGenerator, IScraper scraper, IRecipeParser RecipeParser, ISiteSettingsProvider siteSettingsProvider){
+        public RecipesController(IRecipeRepository recipeProvider, IRecipeMapper recipeMapper, IPdfGenerator pdfGenerator, IScraper scraper, IRecipeParser RecipeParser, ISiteSettingsProvider siteSettingsProvider){
+            this.recipeProvider = recipeProvider;
+            this.recipeMapper = recipeMapper;
             this.pdfGenerator = pdfGenerator;
             this.scraper = scraper;
             this.RecipeParser = RecipeParser;
@@ -35,39 +41,28 @@ namespace Feedbag.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<RecipeDto>> Get()
         {
-            var Recipes = new List<RecipeDto>(){
-                new RecipeDto(){
-                    Title = "Test 1"
-                },
-                new RecipeDto(){
-                    Title = "Test 2"
-                },
-                new RecipeDto(){
-                    Title = "Test 3"
-                }
-            };
+            var recipes = this.recipeProvider.GetAll();
 
-            return Ok();
+            return Ok(recipes);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<RecipeDto> Get(string id)
+        public ActionResult<RecipeDto> Get(Guid id)
         {
-          
-                
-            return Ok();
+            var recipe = this.recipeProvider.Get(id);
+
+            return Ok(recipe);
         }
 
         // POST api/values
         [HttpPost]
-        public ActionResult Post([FromBody] CreateRecipe model)
+        public ActionResult Post([FromBody] CreateRecipeDto model)
         {
             if(model == null || string.IsNullOrEmpty(model.Url)){
                 return BadRequest("No url");
             }
 
-            var fileName = Guid.NewGuid();
             var uri = new Uri(model.Url);
             var settings = this.siteSettingsProvider.GetSourceSiteSettings(uri.Host);
     
@@ -76,38 +71,24 @@ namespace Feedbag.Controllers
             }
 
             var html = this.scraper.Run(uri.OriginalString);
-            
             var parsedRecipe = this.RecipeParser.Parse(html, settings);
+            var recipe = this.recipeMapper.ToDto(parsedRecipe);
+            recipe.SourceUrl = model.Url;
             //var pdfStream = this.pdfGenerator.Generate(url);
-
-            var Recipe = new RecipeDto();
-            Recipe.Title = parsedRecipe.Title;
-            Recipe.Image = parsedRecipe.Image;
-            Recipe.Description = parsedRecipe.Description;
-            Recipe.HowTo = parsedRecipe.HowTo;
-            Recipe.Ingredients = new List<IngredientDto>();
-            foreach(var Ingredient in parsedRecipe.Ingredients){
-                Recipe.Ingredients.Add(new IngredientDto(){
-                    Amount = Ingredient.Amount,
-                    Unit = Ingredient.Unit,
-                    Name = Ingredient.Name
-                });
-            }
-            
-            Recipe.SourceUrl = model.Url;;
                 
-            return Ok(Recipe);
+            return Ok(recipe);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] UpdateRecipeDto recipe)
         {
+            this.recipeProvider.Save(recipe);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
         }
     }
