@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using Feedbag.Models;
 
-namespace Feedbag.Business.Repositories{
-    public interface IRecipeRepository{
+namespace Feedbag.Business.Providers{
+    public interface IRecipeProvider{
         RecipeDto Get(Guid id);
-        List<RecipeDto> GetAll();
+        IEnumerable<RecipeDto> GetAll();
         void Save(UpdateRecipeDto recipe);
         void Delete(Guid id);
     }

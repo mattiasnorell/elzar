@@ -13,7 +13,7 @@ using Feedbag.Business.Scraper;
 using Feedbag.Business.Parser;
 using Feedbag.Business.Mappers;
 using Feedbag.DataAccess.Providers;
-using Feedbag.Business.Repositories;
+using Feedbag.Business.Providers;
 
 namespace Feedbag
 {
@@ -39,7 +39,7 @@ namespace Feedbag
             builder.RegisterType<IngredientParser>().As<IIngredientParser>();
             builder.RegisterType<SiteSettingsProvider>().As<ISiteSettingsProvider>();
             
-            builder.RegisterType<RecipeRepository>().As<IRecipeRepository>();
+            builder.RegisterType<RecipeProvider>().As<IRecipeProvider>();
             builder.RegisterType<RecipeMapper>().As<IRecipeMapper>();
             var ApplicationContainer = builder.Build();
             

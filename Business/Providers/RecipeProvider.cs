@@ -1,35 +1,38 @@
 using System;
 using System.Collections.Generic;
 using Feedbag.Models;
+using Feedbag.DataAccess.Repositories;
+using Feedbag.Business.Mappers;
+using System.Linq;
 
-namespace Feedbag.Business.Repositories{
-    public class RecipeRepository : IRecipeRepository
+namespace Feedbag.Business.Providers{
+    public class RecipeProvider : IRecipeProvider
     {
+        private readonly IRecipeRepository recipeRepository;
+        private readonly IRecipeMapper mapper;
+
+        public RecipeProvider(IRecipeRepository recipeRepository, IRecipeMapper mapper)
+        {
+            this.recipeRepository = recipeRepository;
+            this.mapper = mapper;
+        }
+
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            this.recipeRepository.Remove(id);
         }
 
         public RecipeDto Get(Guid id)
         {
-            return new RecipeDto(){ Title = "Test 1" };
+           var dao = this.recipeRepository.Get(id);
+           return this.mapper.ToDto(dao);
         }
 
-        public List<RecipeDto> GetAll()
+        public IEnumerable<RecipeDto> GetAll()
         {
-            var recipes = new List<RecipeDto>(){
-                new RecipeDto(){
-                    Title = "Test 1"
-                },
-                new RecipeDto(){
-                    Title = "Test 2"
-                },
-                new RecipeDto(){
-                    Title = "Test 3"
-                }
-            };
+            var recipes = this.recipeRepository.GetAll();
 
-            return recipes;
+            return recipes.Select(this.mapper.ToDto);
         }
 
         public void Save(UpdateRecipeDto recipe)

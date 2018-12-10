@@ -9,7 +9,7 @@ using Feedbag.Business.Parser;
 using Feedbag.DataAccess.Providers;
 using Feedbag.Business.Scraper;
 using Feedbag.DataAccess.Entites;
-using Feedbag.Business.Repositories;
+using Feedbag.Business.Providers;
 using Feedbag.Models;
 using Feedbag.Pdf;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +21,14 @@ namespace Feedbag.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
-        private readonly IRecipeRepository recipeProvider;
+        private readonly IRecipeProvider recipeProvider;
         private readonly IRecipeMapper recipeMapper;
         private readonly IPdfGenerator pdfGenerator;
         private readonly IScraper scraper;
         private readonly IRecipeParser RecipeParser;
         private readonly ISiteSettingsProvider siteSettingsProvider;
 
-        public RecipesController(IRecipeRepository recipeProvider, IRecipeMapper recipeMapper, IPdfGenerator pdfGenerator, IScraper scraper, IRecipeParser RecipeParser, ISiteSettingsProvider siteSettingsProvider){
+        public RecipesController(IRecipeProvider recipeProvider, IRecipeMapper recipeMapper, IPdfGenerator pdfGenerator, IScraper scraper, IRecipeParser RecipeParser, ISiteSettingsProvider siteSettingsProvider){
             this.recipeProvider = recipeProvider;
             this.recipeMapper = recipeMapper;
             this.pdfGenerator = pdfGenerator;
@@ -74,7 +74,6 @@ namespace Feedbag.Controllers
             var parsedRecipe = this.RecipeParser.Parse(html, settings);
             var recipe = this.recipeMapper.ToDto(parsedRecipe);
             recipe.SourceUrl = model.Url;
-            //var pdfStream = this.pdfGenerator.Generate(url);
                 
             return Ok(recipe);
         }
@@ -90,6 +89,7 @@ namespace Feedbag.Controllers
         [HttpDelete("{id}")]
         public void Delete(Guid id)
         {
+            this.recipeProvider.Delete(id);
         }
     }
 }
