@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Feedbag.DataAccess.Entites;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -8,7 +9,7 @@ namespace Feedbag.DataAccess.Repositories{
 
     public class RecipeRepository : IRecipeRepository
     {
-        private readonly MongoDB.Driver.IMongoDatabase database;
+        private IMongoDatabase database;
 
         public RecipeRepository()
         {
@@ -16,29 +17,29 @@ namespace Feedbag.DataAccess.Repositories{
             this.database = client.GetDatabase("feedbag");
         }
 
-        public IMongoCollection<Recipe> GetAll()
+        public async Task<IEnumerable<Recipe>> GetAll()
         {
             var collection = this.database.GetCollection<Recipe>("recepies");
 
-            return collection;
+            return await collection.Find<Recipe>(_ => true).ToListAsync();
         }
 
-        public Recipe Get(Guid id)
+        public async Task<Recipe> Get(Guid id)
         {
             var collection = this.database.GetCollection<Recipe>("recepies");
-            return collection.Find<Recipe>(new BsonDocument("id", id)).Single();
+            return await collection.Find<Recipe>(x => x.Id == id).SingleAsync();
         }
 
         public void Remove(Guid id)
         {
             var collection = this.database.GetCollection<Recipe>("recepies");
-            collection.DeleteOne(new BsonDocument("id", id));
+            collection.DeleteOneAsync(x => x.Id == id);
         }
 
         public void Update(Recipe recipe)
         {
             var collection = this.database.GetCollection<Recipe>("recepies");
-            //collection.FindOneAndUpdate<Recipe>(recipe);
+            //collection.UpdateOneAsync<Recipe>(recipe);
         }
     }
 }

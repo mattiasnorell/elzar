@@ -13,6 +13,7 @@ using Feedbag.Business.Scraper;
 using Feedbag.Business.Parser;
 using Feedbag.Business.Mappers;
 using Feedbag.DataAccess.Providers;
+using Feedbag.DataAccess.Repositories;
 using Feedbag.Business.Providers;
 
 namespace Feedbag
@@ -41,6 +42,9 @@ namespace Feedbag
             
             builder.RegisterType<RecipeProvider>().As<IRecipeProvider>();
             builder.RegisterType<RecipeMapper>().As<IRecipeMapper>();
+
+            // Dataaccess
+            builder.RegisterType<RecipeRepository>().As<IRecipeRepository>();
             var ApplicationContainer = builder.Build();
             
             return new AutofacServiceProvider(ApplicationContainer);

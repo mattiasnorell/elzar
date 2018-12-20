@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Feedbag.Models;
 
 namespace Feedbag.Business.Providers{
     public interface IRecipeProvider{
-        RecipeDto Get(Guid id);
-        IEnumerable<RecipeDto> GetAll();
+        Task<RecipeDto> GetAsync(Guid id);
+        Task<IEnumerable<RecipeDto>> GetAllAsync();
         void Save(UpdateRecipeDto recipe);
         void Delete(Guid id);
     }

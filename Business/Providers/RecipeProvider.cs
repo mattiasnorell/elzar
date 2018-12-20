@@ -4,6 +4,7 @@ using Feedbag.Models;
 using Feedbag.DataAccess.Repositories;
 using Feedbag.Business.Mappers;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Feedbag.Business.Providers{
     public class RecipeProvider : IRecipeProvider
@@ -22,15 +23,15 @@ namespace Feedbag.Business.Providers{
             this.recipeRepository.Remove(id);
         }
 
-        public RecipeDto Get(Guid id)
+        public async Task<RecipeDto> GetAsync(Guid id)
         {
-           var dao = this.recipeRepository.Get(id);
+           var dao = await this.recipeRepository.Get(id);
            return this.mapper.ToDto(dao);
         }
 
-        public IEnumerable<RecipeDto> GetAll()
+        public async Task<IEnumerable<RecipeDto>> GetAllAsync()
         {
-            var recipes = this.recipeRepository.GetAll();
+            var recipes = await this.recipeRepository.GetAll();
 
             return recipes.Select(this.mapper.ToDto);
         }

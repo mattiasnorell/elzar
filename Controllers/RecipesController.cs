@@ -41,7 +41,7 @@ namespace Feedbag.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<RecipeDto>> Get()
         {
-            var recipes = this.recipeProvider.GetAll();
+            var recipes = this.recipeProvider.GetAllAsync();
 
             return Ok(recipes);
         }
@@ -50,7 +50,7 @@ namespace Feedbag.Controllers
         [HttpGet("{id}")]
         public ActionResult<RecipeDto> Get(Guid id)
         {
-            var recipe = this.recipeProvider.Get(id);
+            var recipe = this.recipeProvider.GetAsync(id);
 
             return Ok(recipe);
         }
