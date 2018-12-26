@@ -14,8 +14,9 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.7.2" />
+    <PackageReference Include="System.Data.Sqlite" Version="1.0.109.2" />
     <PackageReference Include="Select.HtmlToPdf.NetCore" Version="18.4.0" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
   </ItemGroup>
 
 </Project>

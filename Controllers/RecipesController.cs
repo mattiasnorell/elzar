@@ -39,18 +39,18 @@ namespace Feedbag.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<RecipeDto>> Get()
+        public async Task<ActionResult<IEnumerable<RecipeDto>>> GetAsync()
         {
-            var recipes = this.recipeProvider.GetAllAsync();
+            var recipes = await this.recipeProvider.GetAllAsync();
 
             return Ok(recipes);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<RecipeDto> Get(Guid id)
+        public async Task<ActionResult<RecipeDto>> GetAsync(Guid id)
         {
-            var recipe = this.recipeProvider.GetAsync(id);
+            var recipe = await this.recipeProvider.GetAsync(id);
 
             return Ok(recipe);
         }
@@ -72,6 +72,7 @@ namespace Feedbag.Controllers
 
             var html = this.scraper.Run(uri.OriginalString);
             var parsedRecipe = this.RecipeParser.Parse(html, settings);
+            
             var recipe = this.recipeMapper.ToDto(parsedRecipe);
             recipe.SourceUrl = model.Url;
                 
