@@ -52,7 +52,14 @@ namespace Feedbag.DataAccess.Repositories{
 
         public void Update(Recipe recipe)
         {
-          
+            using (var conn = DatabaseConnection())
+            {
+                if(recipe.Id == 0){
+                    conn.Execute(@"INSERT INTO Recipes (Id, Title, Image, Description, SourceUrl, CreatedAtUtc, UpdatedAtUtc) VALUES (@id, @Title, @Image, @Description, @SourceUrl, @CreatedAtUtc, @UpdatedAtUtc)", recipe);
+                }else{
+                    conn.Execute(@"UPDATE Recipes SET Title = @Title, Image = @Image, Description = @Description, SourceUrl = @SourceUrl, UpdatedAtUtc = @UpdatedAtUtc WHERE Id = @id", recipe);
+                }
+            }
         }
 
         private void CreateDatabase()

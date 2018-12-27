@@ -4,6 +4,7 @@ CREATE TABLE `Recipes` (
                     `Image`	TEXT(255),
                     `Description`	TEXT(500),
                     `SourceUrl` TEXT(255),
+                    `CreatedAtUtc`	INTEGER,
                     `UpdatedAtUtc`	INTEGER
                     )
 

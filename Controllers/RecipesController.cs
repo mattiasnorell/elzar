@@ -74,8 +74,10 @@ namespace Feedbag.Controllers
             var parsedRecipe = this.RecipeParser.Parse(html, settings);
             
             var recipe = this.recipeMapper.ToDto(parsedRecipe);
-            recipe.SourceUrl = model.Url;
-                
+            parsedRecipe.SourceUrl = model.Url;
+
+            this.recipeProvider.Save(recipe);
+                            
             return Ok(recipe);
         }
 

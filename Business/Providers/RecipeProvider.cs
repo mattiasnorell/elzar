@@ -36,9 +36,13 @@ namespace Feedbag.Business.Providers{
             return recipes.Select(this.mapper.ToDto);
         }
 
-        public void Save(UpdateRecipeDto recipe)
+        public void Save(RecipeDto recipe)
         {
-            throw new NotImplementedException();
+            var model = this.mapper.FromDto(recipe);
+            model.CreatedAtUtc = DateTime.UtcNow;
+            model.UpdatedAtUtc = DateTime.UtcNow;
+            
+            this.recipeRepository.Update(model);
         }
     }
 }

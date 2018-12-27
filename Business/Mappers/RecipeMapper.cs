@@ -8,7 +8,13 @@ namespace Feedbag.Business.Mappers{
     {
         public Recipe FromDto(RecipeDto recipe)
         {
-            throw new System.NotImplementedException();
+            var model = new Recipe();
+            model.Id = recipe.Id;
+            model.Title = recipe.Title;
+            model.Image = recipe.Image;
+            model.Description = recipe.Description;
+
+            return model;
         }
 
         public RecipeDto ToDto(Recipe recipe)
