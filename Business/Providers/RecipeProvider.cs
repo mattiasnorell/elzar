@@ -23,26 +23,26 @@ namespace Feedbag.Business.Providers{
             this.recipeRepository.Remove(id);
         }
 
-        public async Task<RecipeDto> GetAsync(Guid id)
+        public async Task<RecipeDto> Get(Guid id)
         {
            var dao = await this.recipeRepository.Get(id);
            return this.mapper.ToDto(dao);
         }
 
-        public async Task<IEnumerable<RecipeDto>> GetAllAsync()
+        public async Task<IEnumerable<RecipeDto>> GetAll()
         {
             var recipes = await this.recipeRepository.GetAll();
 
             return recipes.Select(this.mapper.ToDto);
         }
 
-        public void Save(RecipeDto recipe)
+        public int Save(RecipeDto recipe)
         {
             var model = this.mapper.FromDto(recipe);
-            model.CreatedAtUtc = DateTime.UtcNow;
-            model.UpdatedAtUtc = DateTime.UtcNow;
-            
-            this.recipeRepository.Update(model);
+            model.CreatedAtUtc = DateTime.UtcNow.ToString();
+            model.UpdatedAtUtc = DateTime.UtcNow.ToString();
+
+            return this.recipeRepository.Update(model);
         }
     }
 }

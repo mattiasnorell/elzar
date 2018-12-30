@@ -36,9 +36,9 @@ namespace Feedbag.Business.Parser{
             return input;
         }
 
-        public Ingredient Parse(string input)
+        public IngredientParserResult Parse(string input)
         {
-            var ingredient = new Ingredient();
+            var ingredient = new IngredientParserResult();
             var split = input.Split(' ').Where(e => !string.IsNullOrWhiteSpace(e)).ToArray();
             
             if(split.Length > 1 && split[0] == "0"){

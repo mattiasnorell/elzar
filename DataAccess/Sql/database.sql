@@ -8,23 +8,16 @@ CREATE TABLE `Recipes` (
                     `UpdatedAtUtc`	INTEGER
                     )
 
-CREATE TABLE `Logs` (
+CREATE TABLE `HowToSteps` (
                     `Id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    `ProjectId`	TEXT(100),
-                    `ProjectVersion`	TEXT(100),
-                    `LogText`	TEXT,
-                    `CreatedAtUtc`	INTEGER
+                    `RecepieId` INTEGER,
+                    `Step`	TEXT,
                     )
 
-CREATE TABLE `Environments` (
+CREATE TABLE `Ingredients` (
                     `Id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    `Name`	TEXT(100),
-                    `Destination`	TEXT(255)
-                    )
-
-CREATE TABLE `BuildSteps` (
-                    `Id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    `EnvironmentId`	INTEGER,
-                    `Application` TEXT(255),
-					`Arguments` TEXT(255)
+                    `RecepieId` INTEGER,
+                    `Amount`	TEXT(100),
+                    `Unit`	TEXT(100),
+                    `Name`	TEXT(100)
                     )

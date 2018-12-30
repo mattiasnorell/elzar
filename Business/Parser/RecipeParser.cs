@@ -14,11 +14,11 @@ namespace Feedbag.Business.Parser{
             this.ingredientParser = ingredientParser;
         }
 
-        public Recipe Parse(string html, SourceSite settings){
+        public RecipeParserResult Parse(string html, SourceSite settings){
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
 
-            var recipe = new Recipe();
+            var recipe = new RecipeParserResult();
             recipe.Title = GetHeadline(htmlDocument, settings.TitleElement);
             recipe.Image = GetImage(htmlDocument, settings.ImageElement);
             recipe.Description = GetDescription(htmlDocument, settings.DescriptionElement);
@@ -72,9 +72,9 @@ namespace Feedbag.Business.Parser{
             return image.Attributes[selector.Attribute].Value;
         }
 
-        private List<Ingredient> GetIngredients(HtmlDocument doc, string selector)
+        private List<IngredientParserResult> GetIngredients(HtmlDocument doc, string selector)
         {
-            var model = new List<Ingredient>();
+            var model = new List<IngredientParserResult>();
             var items = doc.DocumentNode.SelectNodes(selector);
 
             foreach(var item in items){

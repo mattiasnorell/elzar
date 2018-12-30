@@ -7,7 +7,7 @@ namespace Feedbag.DataAccess.Repositories{
     public interface IRecipeRepository{
         Task<IEnumerable<Recipe>> GetAll();
         Task<Recipe> Get(Guid id);
-        void Update(Recipe recipe);
+        int Update(Recipe recipe);
         void Remove(Guid id);
     }
 }

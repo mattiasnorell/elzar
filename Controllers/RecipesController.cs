@@ -21,6 +21,9 @@ namespace Feedbag.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
+        private readonly IHowToProvider howToProvider;
+        private readonly IIngredientProvider ingredientProvider;
+        private readonly IIngredientMapper ingredientMapper;
         private readonly IRecipeProvider recipeProvider;
         private readonly IRecipeMapper recipeMapper;
         private readonly IPdfGenerator pdfGenerator;
@@ -28,7 +31,20 @@ namespace Feedbag.Controllers
         private readonly IRecipeParser RecipeParser;
         private readonly ISiteSettingsProvider siteSettingsProvider;
 
-        public RecipesController(IRecipeProvider recipeProvider, IRecipeMapper recipeMapper, IPdfGenerator pdfGenerator, IScraper scraper, IRecipeParser RecipeParser, ISiteSettingsProvider siteSettingsProvider){
+        public RecipesController(
+            IHowToProvider howToProvider,
+            IIngredientProvider ingredientProvider,
+            IIngredientMapper ingredientMapper, 
+            IRecipeProvider recipeProvider, 
+            IRecipeMapper recipeMapper, 
+            IPdfGenerator pdfGenerator,
+            IScraper scraper, 
+            IRecipeParser RecipeParser, 
+            ISiteSettingsProvider siteSettingsProvider
+        ){
+            this.howToProvider = howToProvider;
+            this.ingredientProvider = ingredientProvider;
+            this.ingredientMapper = ingredientMapper;
             this.recipeProvider = recipeProvider;
             this.recipeMapper = recipeMapper;
             this.pdfGenerator = pdfGenerator;
@@ -41,7 +57,7 @@ namespace Feedbag.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RecipeDto>>> GetAsync()
         {
-            var recipes = await this.recipeProvider.GetAllAsync();
+            var recipes = await this.recipeProvider.GetAll();
 
             return Ok(recipes);
         }
@@ -50,7 +66,7 @@ namespace Feedbag.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RecipeDto>> GetAsync(Guid id)
         {
-            var recipe = await this.recipeProvider.GetAsync(id);
+            var recipe = await this.recipeProvider.Get(id);
 
             return Ok(recipe);
         }
@@ -72,11 +88,32 @@ namespace Feedbag.Controllers
 
             var html = this.scraper.Run(uri.OriginalString);
             var parsedRecipe = this.RecipeParser.Parse(html, settings);
-            
-            var recipe = this.recipeMapper.ToDto(parsedRecipe);
-            parsedRecipe.SourceUrl = model.Url;
 
-            this.recipeProvider.Save(recipe);
+            var recipe = new UpdateRecipeDto();
+            recipe.Title = parsedRecipe.Title;
+            recipe.Image = parsedRecipe.Image;
+            recipe.Description = parsedRecipe.Description;
+            recipe.SourceUrl = model.Url;
+
+            var id = this.recipeProvider.Save(recipe);
+
+            foreach(var ingredient in parsedRecipe.Ingredients){
+                var ingredientDto = new IngredientDto{
+                    RecipeId = id,
+                    Amount = ingredient.Amount,
+                    Unit = ingredient.Unit,
+                    Name = ingredient.Name
+                };
+
+                this.ingredientProvider.Save(ingredientDto);
+            }
+
+            foreach(var step in parsedRecipe.HowTo){
+                var stepDto = new HowToStepDto{RecipeId = id, Step = step };
+                this.howToProvider.Save(stepDto);
+            }
+            
+
                             
             return Ok(recipe);
         }

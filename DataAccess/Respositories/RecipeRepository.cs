@@ -12,7 +12,7 @@ namespace Feedbag.DataAccess.Repositories{
     {
         private static string DbFile
         {
-            get { return Environment.CurrentDirectory + "\\database\\feedbag.db"; }
+            get { return Environment.CurrentDirectory + "\\database\\feedbag.db;DateTimeKind=Utc"; }
         }
 
         private SQLiteConnection DatabaseConnection(){
@@ -50,14 +50,16 @@ namespace Feedbag.DataAccess.Repositories{
             
         }
 
-        public void Update(Recipe recipe)
+        public int Update(Recipe recipe)
         {
             using (var conn = DatabaseConnection())
             {
                 if(recipe.Id == 0){
-                    conn.Execute(@"INSERT INTO Recipes (Id, Title, Image, Description, SourceUrl, CreatedAtUtc, UpdatedAtUtc) VALUES (@id, @Title, @Image, @Description, @SourceUrl, @CreatedAtUtc, @UpdatedAtUtc)", recipe);
+                    return conn.QueryFirst<int>(@"INSERT INTO Recipes (Title, Image, Description, SourceUrl, CreatedAtUtc, UpdatedAtUtc) VALUES (@Title, @Image, @Description, @SourceUrl, @CreatedAtUtc, @UpdatedAtUtc); select last_insert_rowid()", recipe);
                 }else{
                     conn.Execute(@"UPDATE Recipes SET Title = @Title, Image = @Image, Description = @Description, SourceUrl = @SourceUrl, UpdatedAtUtc = @UpdatedAtUtc WHERE Id = @id", recipe);
+
+                    return recipe.Id;
                 }
             }
         }

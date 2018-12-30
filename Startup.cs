@@ -15,6 +15,8 @@ using Feedbag.Business.Mappers;
 using Feedbag.DataAccess.Providers;
 using Feedbag.DataAccess.Repositories;
 using Feedbag.Business.Providers;
+using Dapper;
+using System.Data;
 
 namespace Feedbag
 {
@@ -40,10 +42,17 @@ namespace Feedbag
             builder.RegisterType<IngredientParser>().As<IIngredientParser>();
             builder.RegisterType<SiteSettingsProvider>().As<ISiteSettingsProvider>();
             
+            builder.RegisterType<IngredientProvider>().As<IIngredientProvider>();
+            builder.RegisterType<HowToProvider>().As<IHowToProvider>();
             builder.RegisterType<RecipeProvider>().As<IRecipeProvider>();
+            
+            builder.RegisterType<IngredientMapper>().As<IIngredientMapper>();
+            builder.RegisterType<HowToMapper>().As<IHowToMapper>();
             builder.RegisterType<RecipeMapper>().As<IRecipeMapper>();
 
             // Dataaccess
+            builder.RegisterType<IngredientRepository>().As<IIngredientRepository>();
+            builder.RegisterType<HowToRepository>().As<IHowToRepository>();
             builder.RegisterType<RecipeRepository>().As<IRecipeRepository>();
             var ApplicationContainer = builder.Build();
             
