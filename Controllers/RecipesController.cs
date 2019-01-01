@@ -59,6 +59,14 @@ namespace Feedbag.Controllers
         {
             var recipes = await this.recipeProvider.GetAll();
 
+            foreach(var recipe in recipes){
+                var ingredients = await this.ingredientProvider.GetAllByRecipeId(recipe.Id);
+                var howTos = await this.howToProvider.GetAllByRecipeId(recipe.Id);
+                
+                recipe.Ingredients = ingredients.ToList();
+                recipe.HowTo = howTos?.Select(x => x.Step).ToArray();
+            }
+            
             return Ok(recipes);
         }
 
