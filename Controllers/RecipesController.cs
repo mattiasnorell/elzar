@@ -73,7 +73,7 @@ namespace Feedbag.Controllers
 
         // POST api/values
         [HttpPost]
-        public ActionResult Post([FromBody] CreateRecipeDto model)
+        public async Task<ActionResult> Post([FromBody] CreateRecipeDto model)
         {
             if(model == null || string.IsNullOrEmpty(model.Url)){
                 return BadRequest("No url");
@@ -84,6 +84,10 @@ namespace Feedbag.Controllers
     
             if(settings == null){
                 return BadRequest("No settings found for that site");
+            }
+
+            if(await this.recipeProvider.Exist(model.Url)){
+                return BadRequest("Recipe already exist");
             }
 
             var html = this.scraper.Run(uri.OriginalString);

@@ -12,7 +12,7 @@ namespace Feedbag.DataAccess.Repositories{
     {
         private static string DbFile
         {
-            get { return Environment.CurrentDirectory + "\\database\\feedbag.db;DateTimeKind=Utc"; }
+            get { return Environment.CurrentDirectory + "\\database\\feedbag.db"; }
         }
 
         private SQLiteConnection DatabaseConnection(){
@@ -21,7 +21,7 @@ namespace Feedbag.DataAccess.Repositories{
                 throw new Exception("No database found");
             }
             
-            return new SQLiteConnection("Data Source=" + DbFile);
+            return new SQLiteConnection("Data Source=" + DbFile + ";DateTimeKind=Utc");
         }
 
         public IngredientRepository()

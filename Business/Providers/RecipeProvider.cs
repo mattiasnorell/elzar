@@ -29,6 +29,12 @@ namespace Feedbag.Business.Providers{
            return this.mapper.ToDto(dao);
         }
 
+        public async Task<Boolean> Exist(string url)
+        {
+           var result = await this.recipeRepository.GetAll();
+           return result.Any(x => x.SourceUrl == url);
+        } 
+
         public async Task<IEnumerable<RecipeDto>> GetAll()
         {
             var recipes = await this.recipeRepository.GetAll();

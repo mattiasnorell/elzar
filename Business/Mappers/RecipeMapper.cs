@@ -13,6 +13,7 @@ namespace Feedbag.Business.Mappers{
             model.Title = recipe.Title;
             model.Image = recipe.Image;
             model.Description = recipe.Description;
+            model.SourceUrl = recipe.SourceUrl;
 
             return model;
         }
@@ -24,6 +25,7 @@ namespace Feedbag.Business.Mappers{
             model.Title = recipe.Title;
             model.Image = recipe.Image;
             model.Description = recipe.Description;
+            model.SourceUrl = recipe.SourceUrl;
 
             return model;
         }

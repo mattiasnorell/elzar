@@ -9,5 +9,6 @@ namespace Feedbag.Business.Providers{
         Task<IEnumerable<RecipeDto>> GetAll();
         int Save(RecipeDto recipe);
         void Delete(Guid id);
+        Task<Boolean> Exist(string url);
     }
 }
