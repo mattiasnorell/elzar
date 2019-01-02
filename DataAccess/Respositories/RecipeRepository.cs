@@ -1,27 +1,24 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 using Feedbag.DataAccess.Entites;
 using Dapper;
 
-namespace Feedbag.DataAccess.Repositories{
+namespace Feedbag.DataAccess.Repositories
+{
 
     public class RecipeRepository : IRecipeRepository
     {
-        private static string DbFile
-        {
-            get { return Environment.CurrentDirectory + "\\database\\feedbag.db"; }
-        }
 
         private SQLiteConnection DatabaseConnection(){
-            if (!System.IO.File.Exists(DbFile))
+            var dbFile = Configuration.GetConnectionString("FeedbagDatabase");
+            if (!System.IO.File.Exists(dbFile))
             {
-                this.CreateDatabase();
+                //this.CreateDatabase();
             }
             
-            return new SQLiteConnection("Data Source=" + DbFile + ";DateTimeKind=Utc");
+            return new SQLiteConnection(dbFile);
         }
 
         public RecipeRepository()
@@ -66,7 +63,7 @@ namespace Feedbag.DataAccess.Repositories{
 
         private void CreateDatabase()
         {
-            var fs = System.IO.File.Create(DbFile);
+            var fs = System.IO.File.Create("DbFile");
             fs.Close();
 
             using (var conn = DatabaseConnection())
