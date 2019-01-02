@@ -23,7 +23,7 @@ namespace Feedbag.Business.Providers{
             this.recipeRepository.Remove(id);
         }
 
-        public async Task<RecipeDto> Get(Guid id)
+        public async Task<RecipeDto> Get(int id)
         {
            var dao = await this.recipeRepository.Get(id);
            return this.mapper.ToDto(dao);

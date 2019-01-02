@@ -17,6 +17,8 @@ using Feedbag.DataAccess.Repositories;
 using Feedbag.Business.Providers;
 using Dapper;
 using System.Data;
+using Microsoft.AspNetCore.HttpOverrides;
+using Feedbag.Models;
 
 namespace Feedbag
 {
@@ -33,6 +35,9 @@ namespace Feedbag
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            
+            Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure<ConnectionStrings>(services, Configuration.GetSection("ConnectionStrings"));
 
             var builder = new ContainerBuilder();
             builder.Populate(services);  
@@ -70,6 +75,11 @@ namespace Feedbag
             {
                 app.UseHsts();
             }
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();

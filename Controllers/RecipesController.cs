@@ -58,23 +58,38 @@ namespace Feedbag.Controllers
         public async Task<ActionResult<IEnumerable<RecipeDto>>> GetAsync()
         {
             var recipes = await this.recipeProvider.GetAll();
+            var returnValue = new List<RecipeDto>();
 
             foreach(var recipe in recipes){
                 var ingredients = await this.ingredientProvider.GetAllByRecipeId(recipe.Id);
                 var howTos = await this.howToProvider.GetAllByRecipeId(recipe.Id);
                 
-                recipe.Ingredients = ingredients.ToList();
-                recipe.HowTo = howTos?.Select(x => x.Step).ToArray();
+                var mappedRecipe = new RecipeDto();
+
+                mappedRecipe.Id = recipe.Id;
+                mappedRecipe.Title = recipe.Title;
+                mappedRecipe.Description = recipe.Description;
+                mappedRecipe.Image = recipe.Image;
+                mappedRecipe.SourceUrl = recipe.SourceUrl;
+                mappedRecipe.Ingredients = ingredients?.ToList();
+                mappedRecipe.HowTo = howTos?.Select(x => x.Step).ToArray();
+
+                returnValue.Add(mappedRecipe);
             }
             
-            return Ok(recipes);
+            return Ok(returnValue);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RecipeDto>> GetAsync(Guid id)
+        public async Task<ActionResult<RecipeDto>> GetAsync(int id)
         {
             var recipe = await this.recipeProvider.Get(id);
+            var ingredients = await this.ingredientProvider.GetAllByRecipeId(recipe.Id);
+            var howTos = await this.howToProvider.GetAllByRecipeId(recipe.Id);
+            
+            recipe.Ingredients = ingredients?.ToList();
+            recipe.HowTo = howTos?.Select(x => x.Step).ToArray();
 
             return Ok(recipe);
         }

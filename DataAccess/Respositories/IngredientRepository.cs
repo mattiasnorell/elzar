@@ -5,28 +5,22 @@ using System.Data.SQLite;
 using System.Threading.Tasks;
 using Feedbag.DataAccess.Entites;
 using Dapper;
+using Microsoft.Extensions.Options;
+using Feedbag.Models;
 
 namespace Feedbag.DataAccess.Repositories{
 
     public class IngredientRepository : IIngredientRepository
     {
-        private static string DbFile
-        {
-            get { return Environment.CurrentDirectory + "\\database\\feedbag.db"; }
-        }
+        private readonly IOptions<ConnectionStrings> settings;
 
         private SQLiteConnection DatabaseConnection(){
-            if (!System.IO.File.Exists(DbFile))
-            {
-                throw new Exception("No database found");
-            }
-            
-            return new SQLiteConnection("Data Source=" + DbFile + ";DateTimeKind=Utc");
+            return new SQLiteConnection(this.settings.Value.FeedbagDatabase);
         }
 
-        public IngredientRepository()
+        public IngredientRepository(IOptions<ConnectionStrings> settings)
         {
-    
+            this.settings = settings;
         }
 
         public async Task<IEnumerable<Ingredient>> GetAllByRecipeId(int id)

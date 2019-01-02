@@ -4,26 +4,29 @@ using System.Data.SQLite;
 using System.Threading.Tasks;
 using Feedbag.DataAccess.Entites;
 using Dapper;
+using Feedbag.Models;
+using Microsoft.Extensions.Options;
 
 namespace Feedbag.DataAccess.Repositories
 {
 
     public class RecipeRepository : IRecipeRepository
     {
+        private readonly Microsoft.Extensions.Options.IOptions<ConnectionStrings> settings;
 
         private SQLiteConnection DatabaseConnection(){
-            var dbFile = Configuration.GetConnectionString("FeedbagDatabase");
-            if (!System.IO.File.Exists(dbFile))
+           /* if (!System.IO.File.Exists(this.settings.Value?.FeedbagDatabase))
             {
+                throw new Exception("Database not found");
                 //this.CreateDatabase();
-            }
+            } */
             
-            return new SQLiteConnection(dbFile);
+            return new SQLiteConnection(this.settings.Value.FeedbagDatabase);
         }
 
-        public RecipeRepository()
+        public RecipeRepository(IOptions<ConnectionStrings> settings)
         {
-    
+            this.settings = settings;
         }
 
         public async Task<IEnumerable<Recipe>> GetAll()
@@ -34,7 +37,7 @@ namespace Feedbag.DataAccess.Repositories
             }
         }
 
-        public async Task<Recipe> Get(Guid id)
+        public async Task<Recipe> Get(int id)
         {
             using (var conn = DatabaseConnection())
             {
