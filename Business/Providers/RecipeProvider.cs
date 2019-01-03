@@ -42,9 +42,9 @@ namespace Feedbag.Business.Providers{
             return recipes.Select(this.mapper.ToDto);
         }
 
-        public int Save(RecipeDto recipe)
+        public int Save(UpdateRecipeDto recipe)
         {
-            var model = this.mapper.FromDto(recipe);
+            var model = this.mapper.ToDao(recipe);
             model.CreatedAtUtc = DateTime.UtcNow.ToString();
             model.UpdatedAtUtc = DateTime.UtcNow.ToString();
 

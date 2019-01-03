@@ -23,7 +23,6 @@ namespace Feedbag.Business.Mappers{
         {
             var model = new IngredientDto();
             
-            model.Id = ingredient.Id;
             model.Amount = ingredient.Amount;
             model.Unit = ingredient.Unit;
             model.Name = ingredient.Name;

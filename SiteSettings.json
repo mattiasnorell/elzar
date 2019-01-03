@@ -50,7 +50,8 @@
         "ingredientsElement" : "//div[contains(@class,'ingredient-group')]//ul//li",
         "howToElement" : [
             "//div[contains(@class,'step-group')]//ul//li"
-        ]
+        ],
+        "tags": "//div[contains(@class, 'category-list')]//a"
     },
     {
         "url": "www.koket.se",

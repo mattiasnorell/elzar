@@ -24,8 +24,29 @@ namespace Feedbag.Business.Parser{
             recipe.Description = GetDescription(htmlDocument, settings.DescriptionElement);
             recipe.HowTo = GetHowTo(htmlDocument, settings.HowToElement);
             recipe.Ingredients = GetIngredients(htmlDocument, settings.IngredientsElement);
+            recipe.Tags = GetTags(htmlDocument, settings.TagsElement);
 
             return recipe;
+        }
+        private string[] GetTags(HtmlDocument doc, string selector)
+        {
+            if(selector == null){
+                return  null;
+            }
+            
+            var model = new List<string>();
+            
+            var tags = doc.DocumentNode.SelectNodes(selector);
+
+            if(tags == null){
+                return null;
+            }
+
+            foreach(var tag in tags){
+                model.Add(tag.InnerText);
+            }
+            
+            return model.ToArray();
         }
 
         private string GetDescription(HtmlDocument doc, string selector)

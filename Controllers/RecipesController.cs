@@ -73,7 +73,7 @@ namespace Feedbag.Controllers
                 mappedRecipe.SourceUrl = recipe.SourceUrl;
                 mappedRecipe.Ingredients = ingredients?.ToList();
                 mappedRecipe.HowTo = howTos?.Select(x => x.Step).ToArray();
-
+                
                 returnValue.Add(mappedRecipe);
             }
             
@@ -121,6 +121,7 @@ namespace Feedbag.Controllers
             recipe.Image = parsedRecipe.Image;
             recipe.Description = parsedRecipe.Description;
             recipe.SourceUrl = model.Url;
+            recipe.Tags = string.Join(';', parsedRecipe.Tags);
 
             var id = this.recipeProvider.Save(recipe);
 
@@ -139,8 +140,6 @@ namespace Feedbag.Controllers
                 var stepDto = new HowToStepDto{RecipeId = id, Step = step };
                 this.howToProvider.Save(stepDto);
             }
-            
-
                             
             return Ok(recipe);
         }

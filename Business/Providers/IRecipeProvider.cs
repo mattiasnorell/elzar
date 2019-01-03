@@ -7,7 +7,7 @@ namespace Feedbag.Business.Providers{
     public interface IRecipeProvider{
         Task<RecipeDto> Get(int id);
         Task<IEnumerable<RecipeDto>> GetAll();
-        int Save(RecipeDto recipe);
+        int Save(UpdateRecipeDto recipe);
         void Delete(Guid id);
         Task<Boolean> Exist(string url);
     }

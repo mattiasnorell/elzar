@@ -9,5 +9,7 @@ namespace Feedbag.DataAccess.Entites{
         public string DescriptionElement{get;set;}
         public string IngredientsElement{get;set;}
         public string[] HowToElement{get;set;}
+
+        public string TagsElement { get;set;}
     }
 }
