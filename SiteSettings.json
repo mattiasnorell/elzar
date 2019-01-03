@@ -24,7 +24,8 @@
         "ingredientsElement" : "//ul[contains(@class,'ingredients__list')]//li",
         "howToElement" : [
             "//div[contains(@class,'recipe-howto-steps')]//li"
-        ]
+        ],
+        "tagsElement": "//div[contains(@class, 'related-recipe-tags__container')]//a"
     },
     {
         "url": "recept.se",
@@ -51,7 +52,7 @@
         "howToElement" : [
             "//div[contains(@class,'step-group')]//ul//li"
         ],
-        "tags": "//div[contains(@class, 'category-list')]//a"
+        "tagsElement": "//div[contains(@class, 'category-list')]//a"
     },
     {
         "url": "www.koket.se",

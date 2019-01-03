@@ -121,8 +121,11 @@ namespace Feedbag.Controllers
             recipe.Image = parsedRecipe.Image;
             recipe.Description = parsedRecipe.Description;
             recipe.SourceUrl = model.Url;
-            recipe.Tags = string.Join(';', parsedRecipe.Tags);
 
+            if(parsedRecipe.Tags != null){
+                recipe.Tags = string.Join(';', parsedRecipe.Tags);
+            }
+            
             var id = this.recipeProvider.Save(recipe);
 
             foreach(var ingredient in parsedRecipe.Ingredients){

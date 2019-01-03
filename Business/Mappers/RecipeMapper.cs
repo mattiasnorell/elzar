@@ -14,12 +14,13 @@ namespace Feedbag.Business.Mappers{
             model.Image = recipe.Image;
             model.Description = recipe.Description;
             model.SourceUrl = recipe.SourceUrl;
-
+            model.Tags = recipe.Tags;
             return model;
         }
 
         public RecipeDto ToDto(Recipe recipe)
         {
+
             var model = new RecipeDto();
             model.Id = recipe.Id;
             model.Title = recipe.Title;
