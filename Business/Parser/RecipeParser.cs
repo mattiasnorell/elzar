@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,8 +23,8 @@ namespace Feedbag.Business.Parser{
             recipe.Title = GetHeadline(htmlDocument, settings.TitleElement);
             recipe.Image = GetImage(htmlDocument, settings.ImageElement);
             recipe.Description = GetDescription(htmlDocument, settings.DescriptionElement);
-            recipe.HowTo = GetHowTo(htmlDocument, settings.HowToElement);
-            recipe.Ingredients = GetIngredients(htmlDocument, settings.IngredientsElement);
+            recipe.HowTo = GetHowTo(htmlDocument, settings.HowToElement, settings.UseBruteForce);
+            recipe.Ingredients = GetIngredients(htmlDocument, settings.IngredientsElement, settings.UseBruteForce);
             recipe.Tags = GetTags(htmlDocument, settings.TagsElement);
 
             return recipe;
@@ -63,7 +64,7 @@ namespace Feedbag.Business.Parser{
             return doc.DocumentNode.Descendants(selector).Select(x => x.InnerText).First();
         }
 
-        private string[] GetHowTo(HtmlDocument doc, string[] selectors)
+        private string[] GetHowTo(HtmlDocument doc, string[] selectors, bool bruteForce = false)
         {
             var model = new List<string>();
             
@@ -73,18 +74,20 @@ namespace Feedbag.Business.Parser{
                 if(steps == null){
                     continue;
                 }
-
+ 
                 foreach(var step in steps){
                     model.Add(step.InnerText);
                 }
-                }
+
+                break;
+            }
 
             return model.ToArray();
         }
 
         private string GetImage(HtmlDocument doc, SourceSiteImage selector)
         {
-            var image = doc.DocumentNode.SelectNodes(selector.Path).FirstOrDefault();
+            var image = doc.DocumentNode.SelectNodes(selector.Path)?.FirstOrDefault();
 
             if(image == null){
                 return null;
@@ -93,14 +96,39 @@ namespace Feedbag.Business.Parser{
             return image.Attributes[selector.Attribute].Value;
         }
 
-        private List<IngredientParserResult> GetIngredients(HtmlDocument doc, string selector)
+        private List<IngredientParserResult> GetIngredients(HtmlDocument doc, string selector, bool bruteForce = false)
         {
             var model = new List<IngredientParserResult>();
             var items = doc.DocumentNode.SelectNodes(selector);
+            var ingredientLines = new List<string>();
 
-            foreach(var item in items){
-                var ingredientRaw = StripNonText(item.InnerText);
-                var ingredient = this.ingredientParser.Parse(ingredientRaw);
+            if(bruteForce){
+                
+                foreach(var item in items){
+                    var ingredientRaw = StripTagsRegex(item.InnerText);
+
+                    if(!this.ingredientParser.IsIngredientList(ingredientRaw)){
+                        continue;
+                    }
+
+                    var ingredientRows = ingredientRaw.Split("\n").Select(x => StripNonText(x));
+                    ingredientLines.AddRange(ingredientRows);
+                }
+
+            }else{
+                foreach(var item in items){
+                    var ingredientRaw = StripNonText(item.InnerText);
+                    ingredientLines.Add(ingredientRaw);
+                }
+            }
+
+            foreach(var line in ingredientLines){
+                var ingredient = this.ingredientParser.Parse(line);
+
+                if(ingredient == null){
+                    continue;
+                }
+                
                 model.Add(ingredient);
             }
 

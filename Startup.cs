@@ -35,7 +35,6 @@ namespace Feedbag
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
             
             Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure<ConnectionStrings>(services, Configuration.GetSection("ConnectionStrings"));
 

@@ -129,7 +129,7 @@ namespace Feedbag.Controllers
             var id = this.recipeProvider.Save(recipe);
 
             foreach(var ingredient in parsedRecipe.Ingredients){
-                var ingredientDto = new IngredientDto{
+                var ingredientDto = new UpdateIngredientDto{
                     RecipeId = id,
                     Amount = ingredient.Amount,
                     Unit = ingredient.Unit,

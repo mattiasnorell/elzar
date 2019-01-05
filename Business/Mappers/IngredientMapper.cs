@@ -7,7 +7,7 @@ using Feedbag.Models;
 namespace Feedbag.Business.Mappers{
     public class IngredientMapper : IIngredientMapper
     {
-        public Ingredient FromDto(IngredientDto ingredient)
+        public Ingredient FromDto(UpdateIngredientDto ingredient)
         {
             var model = new Ingredient();
             model.Id = ingredient.Id;

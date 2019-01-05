@@ -6,7 +6,7 @@ using Feedbag.Models;
 namespace Feedbag.Business.Providers{
     public interface IIngredientProvider{
         Task<IEnumerable<IngredientDto>> GetAllByRecipeId(int id);
-        void Save(IngredientDto ingredient);
+        void Save(UpdateIngredientDto ingredient);
         void Delete(int id);
     }
 }

@@ -29,7 +29,7 @@ namespace Feedbag.Business.Providers{
            return result.Select(this.mapper.ToDto);
         }
 
-        public void Save(IngredientDto ingredient)
+        public void Save(UpdateIngredientDto ingredient)
         {
             var model = this.mapper.FromDto(ingredient);
 

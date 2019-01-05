@@ -36,8 +36,24 @@ namespace Feedbag.Business.Parser{
             return input;
         }
 
+        public bool IsIngredientList(string input)
+        {
+            var totalOccurances = 0;
+            var unitSplit = input.Split(' ').Distinct();
+            foreach(var unit in validUnits){
+
+                totalOccurances += unitSplit.Count(x => x == unit);
+            }
+
+            return totalOccurances >= 1;
+        }
+
         public IngredientParserResult Parse(string input)
         {
+            if(string.IsNullOrEmpty(input)){
+                return null;
+            }
+            
             var ingredient = new IngredientParserResult();
             var split = input.Split(' ').Where(e => !string.IsNullOrWhiteSpace(e)).ToArray();
             

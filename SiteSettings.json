@@ -79,6 +79,22 @@
         "howToElement" : [
             "//div[contains(@class, 'instructions')]//div[contains(@class, 'recipe-step')]//p"
         ]
+    },
+    {
+        "url": "www.ellematovin.se",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//div[contains(@class,'post-featured-image')]//img",
+            "attribute": "src"
+        },
+        "descriptionElement" : "//div[contains(@class,'c-post-introduction')]",
+        "ingredientsElement" : "//div[contains(@class,'post-content')]//p",
+        "howToElement" : [
+            "//div[contains(@class,'post-content')]//ol//li",
+            "//div[contains(@class,'post-content')]//p"
+        ],
+        "tagsElement": "//div[contains(@class, 'article-tags')]//a",
+        "useBruteForce": true 
     }
 
 ]
