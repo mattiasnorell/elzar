@@ -7,6 +7,7 @@ namespace Feedbag.DataAccess.Repositories{
     public interface IHowToRepository{
         Task<IEnumerable<HowToStep>> GetAllByRecipeId(int id);
         void Update(HowToStep step);
-        void Remove(int id);
+        void Delete(int id);
+        void DeleteByRecipeId(int id);
     }
 }

@@ -8,6 +8,6 @@ namespace Feedbag.DataAccess.Repositories{
         Task<IEnumerable<Recipe>> GetAll();
         Task<Recipe> Get(int id);
         int Update(Recipe recipe);
-        void Remove(Guid id);
+        void Delete(int id);
     }
 }

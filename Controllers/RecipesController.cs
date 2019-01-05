@@ -85,6 +85,11 @@ namespace Feedbag.Controllers
         public async Task<ActionResult<RecipeDto>> GetAsync(int id)
         {
             var recipe = await this.recipeProvider.Get(id);
+
+            if(recipe == null){
+                return NotFound();
+            }
+
             var ingredients = await this.ingredientProvider.GetAllByRecipeId(recipe.Id);
             var howTos = await this.howToProvider.GetAllByRecipeId(recipe.Id);
             
@@ -156,8 +161,10 @@ namespace Feedbag.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
+            this.howToProvider.DeleteByRecipeId(id);
+            this.ingredientProvider.DeleteByRecipeId(id);
             this.recipeProvider.Delete(id);
         }
     }

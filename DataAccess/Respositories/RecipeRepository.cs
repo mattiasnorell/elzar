@@ -45,9 +45,12 @@ namespace Feedbag.DataAccess.Repositories
             }
         }
 
-        public void Remove(Guid id)
+        public void Delete(int id)
         {
-            
+            using (var conn = DatabaseConnection())
+            {
+                conn.Execute(@"DELETE from Recipes where Id = @id", new {id});
+            }
         }
 
         public int Update(Recipe recipe)

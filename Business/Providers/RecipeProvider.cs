@@ -18,9 +18,9 @@ namespace Feedbag.Business.Providers{
             this.mapper = mapper;
         }
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
-            this.recipeRepository.Remove(id);
+            this.recipeRepository.Delete(id);
         }
 
         public async Task<RecipeDto> Get(int id)

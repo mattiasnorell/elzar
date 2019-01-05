@@ -8,6 +8,10 @@ namespace Feedbag.Business.Mappers{
     {
         public Recipe ToDao(UpdateRecipeDto recipe)
         {
+            if(recipe == null){
+                return null;
+            }
+            
             var model = new Recipe();
             model.Id = recipe.Id;
             model.Title = recipe.Title;
@@ -20,6 +24,9 @@ namespace Feedbag.Business.Mappers{
 
         public RecipeDto ToDto(Recipe recipe)
         {
+            if(recipe == null){
+                return null;
+            }
 
             var model = new RecipeDto();
             model.Id = recipe.Id;

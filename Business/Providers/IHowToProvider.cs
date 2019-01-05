@@ -8,5 +8,6 @@ namespace Feedbag.Business.Providers{
         Task<IEnumerable<HowToStepDto>> GetAllByRecipeId(int id);
         void Save(HowToStepDto recipe);
         void Delete(int id);
+        void DeleteByRecipeId(int id);
     }
 }

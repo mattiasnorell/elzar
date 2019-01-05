@@ -20,7 +20,12 @@ namespace Feedbag.Business.Providers{
 
         public void Delete(int id)
         {
-            this.ingredientRepository.Remove(id);
+            this.ingredientRepository.Delete(id);
+        }
+
+        public void DeleteByRecipeId(int id)
+        {
+            this.ingredientRepository.DeleteByRecipeId(id);
         }
 
         public async Task<IEnumerable<IngredientDto>> GetAllByRecipeId(int id)

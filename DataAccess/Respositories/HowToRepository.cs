@@ -31,7 +31,15 @@ namespace Feedbag.DataAccess.Repositories{
             }
         }
 
-        public async void Remove(int id)
+        public async void Delete(int id)
+        {
+            using (var conn = DatabaseConnection())
+            {
+                await conn.ExecuteAsync(@"DELETE FROM HowToSteps WHERE Id = @id", new { id });
+            }
+        }
+
+        public async void DeleteByRecipeId(int id)
         {
             using (var conn = DatabaseConnection())
             {
