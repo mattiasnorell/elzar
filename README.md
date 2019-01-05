@@ -7,8 +7,8 @@ This application heavily rely on webscraping which may or may not be legal where
 ## API endpoints
 | Endpoint | Method | Properties | Description |
 | :------------- | :------------- |:------------- |:------------- |
-| /recepies/ | GET |  | Get all recepies |
-| /recepies/:id | GET | Recepie id | Get a single recepie |
-| /recepies/ | POST | CreateRecipeDto | Tell the api to get a recepie from an external site |
-| /recepies/:id | PUT | UpdateRecipeDto | Update an existing recepie |
-| /recepies/:id | DELETE | Recepie id | Delete a recepie |
+| /recipes/ | GET |  | Get all recipes |
+| /recipes/:id | GET | Recipe id | Get a single recipe |
+| /recipes/ | POST | CreateRecipeDto | Tell the api to get a recipe from an external site |
+| /recipes/:id | PUT | UpdateRecipeDto | Update an existing recipe |
+| /recipes/:id | DELETE | Recipe id | Delete a recipe |
