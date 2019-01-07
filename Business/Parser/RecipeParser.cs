@@ -81,7 +81,7 @@ namespace Elzar.Business.Parser{
                 }
  
                 foreach(var step in steps){
-                    model.Add(step.InnerText);
+                    model.Add(StripNonText(step.InnerText));
                 }
 
                 break;
