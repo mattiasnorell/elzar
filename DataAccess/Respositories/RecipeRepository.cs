@@ -32,6 +32,22 @@ namespace Elzar.DataAccess.Repositories
             }
         }
 
+        public async Task<IEnumerable<Recipe>> GetByTags(string[] tags)
+        {
+            var likeStatement = new List<string>();
+
+            foreach(var tag in tags){
+                likeStatement.Add($"Tags LIKE '%{ tag }%'");
+            }
+
+            var sqlStatement = "SELECT * FROM Recipes WHERE " + string.Join(" OR ", likeStatement);
+
+            using (var conn = this.dbConnection.GetOpenConnection())
+            {
+                return await conn.QueryAsync<Recipe>(sqlStatement);
+            }
+        }
+
         public void Delete(int id)
         {
             using (var conn = this.dbConnection.GetOpenConnection())
@@ -51,45 +67,6 @@ namespace Elzar.DataAccess.Repositories
 
                     return recipe.Id;
                 }
-            }
-        }
-
-        private void CreateDatabase()
-        {
-            var fs = System.IO.File.Create("DbFile");
-            fs.Close();
-
-            using (var conn = this.dbConnection.GetOpenConnection())
-            {
-                conn.Open();
-                conn.Execute(
-                    @"CREATE TABLE `Projects` (
-                    `Id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    `ProjectName`	TEXT(100),
-                    `ProjectId`	TEXT(100),
-                    `Version`	TEXT(100),
-                    `LastDeployAtUtc`	INTEGER)");
-
-                conn.Execute(
-                    @"CREATE TABLE `Logs` (
-                    `Id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    `ProjectId`	TEXT(100),
-                    `ProjectVersion`	TEXT(100),
-                    `LogText`	TEXT,
-                    `CreatedAtUtc`	INTEGER)");
-
-                conn.Execute(
-                    @"CREATE TABLE `Environments` (
-                    `Id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    `EnvironmentName`	TEXT(100),
-                    `Destination`	TEXT(255))");
-
-                conn.Execute(
-                    @"CREATE TABLE `BuildSteps` (
-                    `Id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    `EnvironmentId`	INTEGER,
-                    `Application` TEXT(255),
-					`Arguments` TEXT(255))");
             }
         }
     }

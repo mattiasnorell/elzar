@@ -34,7 +34,7 @@ namespace Elzar.Business.Mappers{
             model.Image = recipe.Image;
             model.Description = recipe.Description;
             model.SourceUrl = recipe.SourceUrl;
-            model.Tags = recipe.Tags?.Split(';');
+            model.Tags = recipe.Tags?.ToLowerInvariant().Split(';');
 
             return model;
         }

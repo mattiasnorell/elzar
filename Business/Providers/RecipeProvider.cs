@@ -29,6 +29,12 @@ namespace Elzar.Business.Providers{
            return this.mapper.ToDto(dao);
         }
 
+        public async Task<IEnumerable<RecipeDto>> GetByTags(string[] tags)
+        {
+           var dao = await this.recipeRepository.GetByTags(tags);
+           return dao.Select(this.mapper.ToDto);
+        }
+
         public async Task<Boolean> Exist(string url)
         {
            var result = await this.recipeRepository.GetAll();
