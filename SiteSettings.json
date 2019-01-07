@@ -97,6 +97,48 @@
         ],
         "tagsElement": "//div[contains(@class, 'article-tags')]//a",
         "useBruteForce": true 
+    },
+    {
+        "url": "www.recept.com",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//meta[contains(@property,'og:image')]",
+            "attribute": "content"
+        },
+        "descriptionElement" : null,
+        "ingredientsElement" : "//ul[contains(@class,'ingredients')]//li[contains(@class, 'ingredients-li-ingredients')]",
+        "howToElement" : [
+            "//div[contains(@class,'how-to')]//li"
+        ],
+        "tagsElement": null
+    },
+    {
+        "url": "www.coop.se",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//img[contains(@class,'Recipe-image')]",
+            "attribute": "src"
+        },
+        "descriptionElement" : "//p[contains(@class, 'Recipe-description')]",
+        "ingredientsElement" : "//ul[contains(@class,'Recipe-ingredientList')]/li",
+        "howToElement" : [
+            "//li[contains(@class,'Recipe-instructionItem')]//p"
+        ],
+        "tagsElement": null
+    },
+    {
+        "url": "alltommat.se",
+        "titleElement": "h1",
+        "imageElement" : {
+            "path": "//meta[contains(@property,'og:image')]",
+            "attribute": "content"
+        },
+        "descriptionElement" : "//p[contains(@class, 'preamble')]",
+        "ingredientsElement" : "//table[contains(@class,'recipe-table')]/tr",
+        "howToElement" : [
+            "//div[contains(@class,'-recipe-content')]//li"
+        ],
+        "tagsElement": "//p[contains(@class,'article-cats-and-tags')]//a"
     }
 
 ]

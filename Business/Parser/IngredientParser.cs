@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Elzar.DataAccess.Entites;
 
 namespace Elzar.Business.Parser{
@@ -36,6 +37,10 @@ namespace Elzar.Business.Parser{
             return input;
         }
 
+        private bool IsAmountValid(string input){
+            return Regex.IsMatch(input, @"^\d+$") || amountReplaceCharMap.ContainsKey(input);
+        }
+
         public bool IsIngredientList(string input)
         {
             var totalOccurances = 0;
@@ -59,7 +64,7 @@ namespace Elzar.Business.Parser{
             
             if(split.Length > 1 && split[0] == "0"){
                 ingredient.Name = split[1];
-            }else if(split.Length > 1){
+            }else if(split.Length > 1 && IsAmountValid(split[0])){
                 var hasUnit = validUnits.Contains(split[1]);
 
                 if(hasUnit){
