@@ -18,7 +18,7 @@ namespace Elzar.Business.Mappers{
             model.Image = recipe.Image;
             model.Description = recipe.Description;
             model.SourceUrl = recipe.SourceUrl;
-            model.Tags = recipe.Tags;
+            model.Tags = recipe.Tags?.ToLowerInvariant();
             return model;
         }
 
