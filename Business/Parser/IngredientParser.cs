@@ -38,7 +38,12 @@ namespace Elzar.Business.Parser{
         }
 
         private bool IsAmountValid(string input){
-            return Regex.IsMatch(input, @"^\d+$") || amountReplaceCharMap.ContainsKey(input);
+            var isNumericWithSpecialChars = Regex.IsMatch(input, @"^[0-9-–\.\,]+$");
+            var hasReplaceableCharacters = amountReplaceCharMap.ContainsKey(input);
+            double parseResult;
+            var isParseble = double.TryParse(input, out parseResult);
+
+            return isNumericWithSpecialChars || hasReplaceableCharacters || isParseble;
         }
 
         public bool IsIngredientList(string input)
@@ -70,10 +75,10 @@ namespace Elzar.Business.Parser{
                 if(hasUnit){
                     ingredient.Amount = ParseAmount(split[0]);
                     ingredient.Unit = split[1];
-                    ingredient.Name = string.Join(" ", split.Skip(2));
+                    ingredient.Name = string.Join(" ", split.Skip(2))?.Trim();
                 }else{
                     ingredient.Amount = ParseAmount(split[0]);
-                    ingredient.Name = string.Join(" ", split.Skip(1));
+                    ingredient.Name = string.Join(" ", split.Skip(1))?.Trim();
                 }
             }else{
                 ingredient.Name = input;
