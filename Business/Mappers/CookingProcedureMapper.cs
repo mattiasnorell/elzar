@@ -5,22 +5,30 @@ namespace Elzar.Business.Mappers
 {
     public class CookingProcedureMapper : ICookingProcedureMapper
     {
-        public CookingProcedureStep FromDto(CookingProcedureDto recipe)
+        public CookingProcedureStep FromDto(CookingProcedureDto step)
         {
+            if(step == null){
+                return null;
+            }
+
             var model = new CookingProcedureStep();
-            model.Id = recipe.Id;
-            model.RecipeId = recipe.RecipeId;
-            model.Step = recipe.Step;
+            model.Id = step.Id;
+            model.RecipeId = step.RecipeId;
+            model.Step = step.Step;
 
             return model;
         }
 
-        public CookingProcedureDto ToDto(CookingProcedureStep recipe)
+        public CookingProcedureDto ToDto(CookingProcedureStep step)
         {
+            if(step == null){
+                return null;
+            }
+
             var model = new CookingProcedureDto();
-            model.Id = recipe.Id;
-            model.RecipeId = recipe.RecipeId;
-            model.Step = recipe.Step;
+            model.Id = step.Id;
+            model.RecipeId = step.RecipeId;
+            model.Step = step.Step;
 
             return model;
         }

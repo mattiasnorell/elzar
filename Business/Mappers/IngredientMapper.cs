@@ -9,6 +9,11 @@ namespace Elzar.Business.Mappers{
     {
         public Ingredient FromDto(UpdateIngredientDto ingredient)
         {
+
+            if(ingredient == null){
+                return null;
+            }
+
             var model = new Ingredient();
             model.Id = ingredient.Id;
             model.RecipeId = ingredient.RecipeId;
@@ -21,6 +26,10 @@ namespace Elzar.Business.Mappers{
 
         public IngredientDto ToDto(Ingredient ingredient)
         {
+            if(ingredient == null){
+                return null;
+            }
+
             var model = new IngredientDto();
             model.Id = ingredient.Id;
             model.Amount = ingredient.Amount;
@@ -32,6 +41,10 @@ namespace Elzar.Business.Mappers{
 
         public IngredientDto ToDto(IngredientParserResult ingredient)
         {
+            if(ingredient == null){
+                return null;
+            }
+            
             var model = new IngredientDto();
             
             model.Amount = ingredient.Amount;
