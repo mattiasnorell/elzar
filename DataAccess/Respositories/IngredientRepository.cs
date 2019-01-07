@@ -1,30 +1,24 @@
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Threading.Tasks;
 using Elzar.DataAccess.Entites;
 using Dapper;
-using Microsoft.Extensions.Options;
-using Elzar.Models;
+using Elzar.DataAccess.Providers;
 
 namespace Elzar.DataAccess.Repositories
 {
 
     public class IngredientRepository : IIngredientRepository
     {
-        private readonly IOptions<ConnectionStrings> settings;
+        private readonly IDbConnectionProvider dbConnection;
 
-        private SQLiteConnection DatabaseConnection(){
-            return new SQLiteConnection(this.settings.Value.Database);
-        }
-
-        public IngredientRepository(IOptions<ConnectionStrings> settings)
+        public IngredientRepository(IDbConnectionProvider dbConnection)
         {
-            this.settings = settings;
+            this.dbConnection = dbConnection;
         }
 
         public async Task<IEnumerable<Ingredient>> GetAllByRecipeId(int id)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 return await conn.QueryAsync<Ingredient>(@"select * from Ingredients where RecipeId = @id", new { id });
             }
@@ -32,7 +26,7 @@ namespace Elzar.DataAccess.Repositories
 
         public async void Delete(int id)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 await conn.ExecuteAsync(@"DELETE FROM Ingredients WHERE Id = @id", new { id });
             }
@@ -40,7 +34,7 @@ namespace Elzar.DataAccess.Repositories
 
         public async void DeleteByRecipeId(int id)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 await conn.ExecuteAsync(@"DELETE FROM Ingredients WHERE RecipeId = @id", new { id });
             }
@@ -48,7 +42,7 @@ namespace Elzar.DataAccess.Repositories
 
         public void Update(Ingredient ingredient)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 if(ingredient.Id == 0){
                     conn.Execute(@"INSERT INTO Ingredients (RecipeId, Amount, Unit, Name) VALUES (@RecipeId, @Amount, @Unit, @Name)", ingredient);

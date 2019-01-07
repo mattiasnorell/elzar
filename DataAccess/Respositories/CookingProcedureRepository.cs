@@ -1,30 +1,24 @@
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Threading.Tasks;
 using Elzar.DataAccess.Entites;
 using Dapper;
-using Microsoft.Extensions.Options;
-using Elzar.Models;
+using Elzar.DataAccess.Providers;
 
 namespace Elzar.DataAccess.Repositories
 {
 
     public class CookingProcedureRepository : ICookingProcedureRepository
     {
-        private readonly IOptions<ConnectionStrings> settings;
+        private readonly IDbConnectionProvider dbConnection;
 
-        private SQLiteConnection DatabaseConnection(){
-           return new SQLiteConnection(this.settings.Value.Database);
-        }
-
-        public CookingProcedureRepository(IOptions<ConnectionStrings> settings)
+        public CookingProcedureRepository(IDbConnectionProvider dbConnection)
         {
-            this.settings = settings;
+            this.dbConnection = dbConnection;
         }
 
         public async Task<IEnumerable<CookingProcedureStep>> GetAllByRecipeId(int id)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 return await conn.QueryAsync<CookingProcedureStep>(@"select * from HowToSteps where RecipeId = @id", new { id });
             }
@@ -32,7 +26,7 @@ namespace Elzar.DataAccess.Repositories
 
         public async void Delete(int id)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 await conn.ExecuteAsync(@"DELETE FROM HowToSteps WHERE Id = @id", new { id });
             }
@@ -40,7 +34,7 @@ namespace Elzar.DataAccess.Repositories
 
         public async void DeleteByRecipeId(int id)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 await conn.ExecuteAsync(@"DELETE FROM HowToSteps WHERE RecipeId = @id", new { id });
             }
@@ -48,7 +42,7 @@ namespace Elzar.DataAccess.Repositories
 
         public void Update(CookingProcedureStep step)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 if(step.Id == 0){
                     conn.Execute(@"INSERT INTO HowToSteps (RecipeId, Step) VALUES (@RecipeId, @Step)", step);

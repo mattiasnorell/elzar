@@ -1,36 +1,24 @@
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Threading.Tasks;
 using Elzar.DataAccess.Entites;
 using Dapper;
-using Elzar.Models;
-using Microsoft.Extensions.Options;
+using Elzar.DataAccess.Providers;
 
 namespace Elzar.DataAccess.Repositories
 {
 
     public class RecipeRepository : IRecipeRepository
     {
-        private readonly Microsoft.Extensions.Options.IOptions<ConnectionStrings> settings;
+        private readonly IDbConnectionProvider dbConnection;
 
-        private SQLiteConnection DatabaseConnection(){
-           /* if (!System.IO.File.Exists(this.settings.Value?.ElzarDatabase))
-            {
-                throw new Exception("Database not found");
-                //this.CreateDatabase();
-            } */
-            
-            return new SQLiteConnection(this.settings.Value.Database);
-        }
-
-        public RecipeRepository(IOptions<ConnectionStrings> settings)
+        public RecipeRepository(IDbConnectionProvider dbConnection)
         {
-            this.settings = settings;
+            this.dbConnection = dbConnection;
         }
 
         public async Task<IEnumerable<Recipe>> GetAll()
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 return await conn.QueryAsync<Recipe>(@"select * from Recipes");
             }
@@ -38,7 +26,7 @@ namespace Elzar.DataAccess.Repositories
 
         public async Task<Recipe> Get(int id)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 return await conn.QueryFirstOrDefaultAsync<Recipe>(@"select * from Recipes where Id = @id", new {id});
             }
@@ -46,7 +34,7 @@ namespace Elzar.DataAccess.Repositories
 
         public void Delete(int id)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 conn.Execute(@"DELETE from Recipes where Id = @id", new {id});
             }
@@ -54,7 +42,7 @@ namespace Elzar.DataAccess.Repositories
 
         public int Update(Recipe recipe)
         {
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 if(recipe.Id == 0){
                     return conn.QueryFirst<int>(@"INSERT INTO Recipes (Title, Image, Description, SourceUrl, Tags, CreatedAtUtc, UpdatedAtUtc) VALUES (@Title, @Image, @Description, @SourceUrl, @Tags, @CreatedAtUtc, @UpdatedAtUtc); select last_insert_rowid()", recipe);
@@ -71,7 +59,7 @@ namespace Elzar.DataAccess.Repositories
             var fs = System.IO.File.Create("DbFile");
             fs.Close();
 
-            using (var conn = DatabaseConnection())
+            using (var conn = this.dbConnection.GetOpenConnection())
             {
                 conn.Open();
                 conn.Execute(
