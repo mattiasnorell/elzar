@@ -65,7 +65,8 @@
         "ingredientsElement" : "//section[contains(@id,'ingredients')]//span[contains(@class,'ingredient')]",
         "howToElement" : [
             "//section[contains(@id, 'step-by-step')]//ol//li"
-        ]
+        ],
+        "tagsElement": "//a[contains(@class, 'category')]"
     },
     {
         "url": "www.hemtrevligt.se",

@@ -20,7 +20,7 @@ namespace Elzar.DataAccess.Repositories
                 //this.CreateDatabase();
             } */
             
-            return new SQLiteConnection(this.settings.Value.ElzarDatabase);
+            return new SQLiteConnection(this.settings.Value.Database);
         }
 
         public RecipeRepository(IOptions<ConnectionStrings> settings)

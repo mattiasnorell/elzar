@@ -14,7 +14,7 @@ namespace Elzar.DataAccess.Repositories
         private readonly IOptions<ConnectionStrings> settings;
 
         private SQLiteConnection DatabaseConnection(){
-            return new SQLiteConnection(this.settings.Value.ElzarDatabase);
+            return new SQLiteConnection(this.settings.Value.Database);
         }
 
         public IngredientRepository(IOptions<ConnectionStrings> settings)

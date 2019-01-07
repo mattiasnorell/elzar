@@ -8,7 +8,7 @@ namespace Elzar.Business.Parser {
         public string Description{get;set;}
         public string SourceUrl {get;set;}
         public List<IngredientParserResult> Ingredients { get;set;}
-        public string[] HowTo {get;set;}
+        public string[] CookingProcedureSteps {get;set;}
         public string[] Tags {get;set;}
     }
 }

@@ -23,7 +23,7 @@ namespace Elzar.Business.Parser{
             recipe.Title = GetHeadline(htmlDocument, settings.TitleElement);
             recipe.Image = GetImage(htmlDocument, settings.ImageElement);
             recipe.Description = GetDescription(htmlDocument, settings.DescriptionElement);
-            recipe.HowTo = GetHowTo(htmlDocument, settings.HowToElement, settings.UseBruteForce);
+            recipe.CookingProcedureSteps = GetCookingProcedures(htmlDocument, settings.HowToElement, settings.UseBruteForce);
             recipe.Ingredients = GetIngredients(htmlDocument, settings.IngredientsElement, settings.UseBruteForce);
             recipe.Tags = GetTags(htmlDocument, settings.TagsElement);
 
@@ -61,11 +61,16 @@ namespace Elzar.Business.Parser{
 
         private string GetHeadline(HtmlDocument doc, string selector)
         {
+            if(selector == null){
+                return  null;
+            }
+
             return doc.DocumentNode.Descendants(selector).Select(x => x.InnerText).First();
         }
 
-        private string[] GetHowTo(HtmlDocument doc, string[] selectors, bool bruteForce = false)
+        private string[] GetCookingProcedures(HtmlDocument doc, string[] selectors, bool bruteForce = false)
         {
+
             var model = new List<string>();
             
             foreach(var selector in selectors){

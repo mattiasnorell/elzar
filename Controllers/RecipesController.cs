@@ -71,7 +71,7 @@ namespace Elzar.Controllers
                 mappedRecipe.Image = recipe.Image;
                 mappedRecipe.SourceUrl = recipe.SourceUrl;
                 mappedRecipe.Ingredients = ingredients?.ToList();
-                mappedRecipe.HowTo = howTos?.Select(x => x.Step).ToArray();
+                mappedRecipe.CookingProcedureSteps = howTos?.Select(x => x.Step).ToArray();
                 
                 returnValue.Add(mappedRecipe);
             }
@@ -92,7 +92,7 @@ namespace Elzar.Controllers
             var howTos = await this.cookingProcedureProvider.GetAllByRecipeId(recipe.Id);
             
             recipe.Ingredients = ingredients?.ToList();
-            recipe.HowTo = howTos?.Select(x => x.Step).ToArray();
+            recipe.CookingProcedureSteps = howTos?.Select(x => x.Step).ToArray();
 
             return Ok(recipe);
         }
@@ -141,12 +141,12 @@ namespace Elzar.Controllers
                 this.ingredientProvider.Save(ingredientDto);
             }
 
-            foreach(var step in parsedRecipe.HowTo){
+            foreach(var step in parsedRecipe.CookingProcedureSteps){
                 var stepDto = new CookingProcedureDto{RecipeId = id, Step = step };
                 this.cookingProcedureProvider.Save(stepDto);
             }
                             
-            return Ok(recipe);
+            return Ok();
         }
 
         [HttpPut("{id}")]
