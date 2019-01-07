@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Feedbag.Models;
 
 namespace Feedbag.Business.Providers{
-    public interface IHowToProvider{
-        Task<IEnumerable<HowToStepDto>> GetAllByRecipeId(int id);
-        void Save(HowToStepDto recipe);
+    public interface ICookingProcedureProvider{
+        Task<IEnumerable<CookingProcedureDto>> GetAllByRecipeId(int id);
+        void Save(CookingProcedureDto recipe);
         void Delete(int id);
         void DeleteByRecipeId(int id);
     }

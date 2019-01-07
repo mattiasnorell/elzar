@@ -16,14 +16,12 @@ namespace Feedbag.Controllers
             this.ingredientProvider = ingredientProvider;
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] UpdateIngredientDto ingredientDto)
         {
             this.ingredientProvider.Save(ingredientDto);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

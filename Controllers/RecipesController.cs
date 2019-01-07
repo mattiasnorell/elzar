@@ -21,7 +21,7 @@ namespace Feedbag.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
-        private readonly IHowToProvider howToProvider;
+        private readonly ICookingProcedureProvider cookingProcedureProvider;
         private readonly IIngredientProvider ingredientProvider;
         private readonly IIngredientMapper ingredientMapper;
         private readonly IRecipeProvider recipeProvider;
@@ -32,7 +32,7 @@ namespace Feedbag.Controllers
         private readonly ISiteSettingsProvider siteSettingsProvider;
 
         public RecipesController(
-            IHowToProvider howToProvider,
+            ICookingProcedureProvider cookingProcedureProvider,
             IIngredientProvider ingredientProvider,
             IIngredientMapper ingredientMapper, 
             IRecipeProvider recipeProvider, 
@@ -42,7 +42,7 @@ namespace Feedbag.Controllers
             IRecipeParser RecipeParser, 
             ISiteSettingsProvider siteSettingsProvider
         ){
-            this.howToProvider = howToProvider;
+            this.cookingProcedureProvider = cookingProcedureProvider;
             this.ingredientProvider = ingredientProvider;
             this.ingredientMapper = ingredientMapper;
             this.recipeProvider = recipeProvider;
@@ -53,7 +53,6 @@ namespace Feedbag.Controllers
             this.siteSettingsProvider = siteSettingsProvider;
         }
 
-        // GET api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RecipeDto>>> GetAsync()
         {
@@ -62,7 +61,7 @@ namespace Feedbag.Controllers
 
             foreach(var recipe in recipes){
                 var ingredients = await this.ingredientProvider.GetAllByRecipeId(recipe.Id);
-                var howTos = await this.howToProvider.GetAllByRecipeId(recipe.Id);
+                var howTos = await this.cookingProcedureProvider.GetAllByRecipeId(recipe.Id);
                 
                 var mappedRecipe = new RecipeDto();
 
@@ -80,7 +79,6 @@ namespace Feedbag.Controllers
             return Ok(returnValue);
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RecipeDto>> GetAsync(int id)
         {
@@ -91,7 +89,7 @@ namespace Feedbag.Controllers
             }
 
             var ingredients = await this.ingredientProvider.GetAllByRecipeId(recipe.Id);
-            var howTos = await this.howToProvider.GetAllByRecipeId(recipe.Id);
+            var howTos = await this.cookingProcedureProvider.GetAllByRecipeId(recipe.Id);
             
             recipe.Ingredients = ingredients?.ToList();
             recipe.HowTo = howTos?.Select(x => x.Step).ToArray();
@@ -99,7 +97,6 @@ namespace Feedbag.Controllers
             return Ok(recipe);
         }
 
-        // POST api/values
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateRecipeDto model)
         {
@@ -145,25 +142,23 @@ namespace Feedbag.Controllers
             }
 
             foreach(var step in parsedRecipe.HowTo){
-                var stepDto = new HowToStepDto{RecipeId = id, Step = step };
-                this.howToProvider.Save(stepDto);
+                var stepDto = new CookingProcedureDto{RecipeId = id, Step = step };
+                this.cookingProcedureProvider.Save(stepDto);
             }
                             
             return Ok(recipe);
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] UpdateRecipeDto recipe)
         {
             this.recipeProvider.Save(recipe);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            this.howToProvider.DeleteByRecipeId(id);
+            this.cookingProcedureProvider.DeleteByRecipeId(id);
             this.ingredientProvider.DeleteByRecipeId(id);
             this.recipeProvider.Delete(id);
         }

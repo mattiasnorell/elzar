@@ -10,7 +10,7 @@ using Feedbag.Models;
 
 namespace Feedbag.DataAccess.Repositories{
 
-    public class HowToRepository : IHowToRepository
+    public class CookingProcedureRepository : ICookingProcedureRepository
     {
         private readonly IOptions<ConnectionStrings> settings;
 
@@ -18,16 +18,16 @@ namespace Feedbag.DataAccess.Repositories{
            return new SQLiteConnection(this.settings.Value.FeedbagDatabase);
         }
 
-        public HowToRepository(IOptions<ConnectionStrings> settings)
+        public CookingProcedureRepository(IOptions<ConnectionStrings> settings)
         {
             this.settings = settings;
         }
 
-        public async Task<IEnumerable<HowToStep>> GetAllByRecipeId(int id)
+        public async Task<IEnumerable<CookingProcedureStep>> GetAllByRecipeId(int id)
         {
             using (var conn = DatabaseConnection())
             {
-                return await conn.QueryAsync<HowToStep>(@"select * from HowToSteps where RecipeId = @id", new { id });
+                return await conn.QueryAsync<CookingProcedureStep>(@"select * from HowToSteps where RecipeId = @id", new { id });
             }
         }
 
@@ -47,7 +47,7 @@ namespace Feedbag.DataAccess.Repositories{
             }
         }
 
-        public void Update(HowToStep step)
+        public void Update(CookingProcedureStep step)
         {
             using (var conn = DatabaseConnection())
             {

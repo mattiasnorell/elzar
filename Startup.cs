@@ -1,7 +1,5 @@
 ﻿using Autofac;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +13,6 @@ using Feedbag.Business.Mappers;
 using Feedbag.DataAccess.Providers;
 using Feedbag.DataAccess.Repositories;
 using Feedbag.Business.Providers;
-using Dapper;
-using System.Data;
 using Microsoft.AspNetCore.HttpOverrides;
 using Feedbag.Models;
 
@@ -47,16 +43,16 @@ namespace Feedbag
             builder.RegisterType<SiteSettingsProvider>().As<ISiteSettingsProvider>();
             
             builder.RegisterType<IngredientProvider>().As<IIngredientProvider>();
-            builder.RegisterType<HowToProvider>().As<IHowToProvider>();
+            builder.RegisterType<CookingProcedureProvider>().As<ICookingProcedureProvider>();
             builder.RegisterType<RecipeProvider>().As<IRecipeProvider>();
             
             builder.RegisterType<IngredientMapper>().As<IIngredientMapper>();
-            builder.RegisterType<HowToMapper>().As<IHowToMapper>();
+            builder.RegisterType<CookingProcedureMapper>().As<ICookingProcedureMapper>();
             builder.RegisterType<RecipeMapper>().As<IRecipeMapper>();
 
             // Dataaccess
             builder.RegisterType<IngredientRepository>().As<IIngredientRepository>();
-            builder.RegisterType<HowToRepository>().As<IHowToRepository>();
+            builder.RegisterType<CookingProcedureRepository>().As<ICookingProcedureRepository>();
             builder.RegisterType<RecipeRepository>().As<IRecipeRepository>();
             var ApplicationContainer = builder.Build();
             

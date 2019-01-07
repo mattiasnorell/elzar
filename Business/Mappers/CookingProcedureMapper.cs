@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
 using Feedbag.DataAccess.Entites;
 using Feedbag.Models;
 
-namespace Feedbag.Business.Mappers{
-    public class HowToMapper : IHowToMapper
+namespace Feedbag.Business.Mappers
+{
+    public class CookingProcedureMapper : ICookingProcedureMapper
     {
-        public HowToStep FromDto(HowToStepDto recipe)
+        public CookingProcedureStep FromDto(CookingProcedureDto recipe)
         {
-            var model = new HowToStep();
+            var model = new CookingProcedureStep();
             model.Id = recipe.Id;
             model.RecipeId = recipe.RecipeId;
             model.Step = recipe.Step;
@@ -16,9 +15,9 @@ namespace Feedbag.Business.Mappers{
             return model;
         }
 
-        public HowToStepDto ToDto(HowToStep recipe)
+        public CookingProcedureDto ToDto(CookingProcedureStep recipe)
         {
-            var model = new HowToStepDto();
+            var model = new CookingProcedureDto();
             model.Id = recipe.Id;
             model.RecipeId = recipe.RecipeId;
             model.Step = recipe.Step;
