@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Feedbag.Models;
 using Feedbag.DataAccess.Repositories;
@@ -6,7 +5,8 @@ using Feedbag.Business.Mappers;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Feedbag.Business.Providers{
+namespace Feedbag.Business.Providers
+{
     public class CookingProcedureProvider : ICookingProcedureProvider
     {
         private readonly ICookingProcedureRepository cookingProcedureRepository;

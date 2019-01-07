@@ -10,7 +10,6 @@ namespace Feedbag.DataAccess.Entites{
         public string IngredientsElement{get;set;}
         public string[] HowToElement{get;set;}
         public string TagsElement { get;set;}
-
         public Boolean UseBruteForce { get;set;}
     }
 }

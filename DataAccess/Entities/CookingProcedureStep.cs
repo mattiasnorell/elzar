@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-
-namespace Feedbag.DataAccess.Entites{
+namespace Feedbag.DataAccess.Entites
+{
     public class CookingProcedureStep{
         public int Id {get;set;}
         public int RecipeId {get;set;}

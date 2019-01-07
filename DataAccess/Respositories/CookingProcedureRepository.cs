@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Threading.Tasks;
@@ -8,7 +6,8 @@ using Dapper;
 using Microsoft.Extensions.Options;
 using Feedbag.Models;
 
-namespace Feedbag.DataAccess.Repositories{
+namespace Feedbag.DataAccess.Repositories
+{
 
     public class CookingProcedureRepository : ICookingProcedureRepository
     {

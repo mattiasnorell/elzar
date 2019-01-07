@@ -1,6 +1,5 @@
-using System;
-
-namespace Feedbag.DataAccess.Entites{
+namespace Feedbag.DataAccess.Entites
+{
     public class Ingredient{
         public int Id {get;set;}
         public int RecipeId {get;set;}
