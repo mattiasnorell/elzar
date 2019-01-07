@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Threading.Tasks;
-using Feedbag.DataAccess.Entites;
+using Elzar.DataAccess.Entites;
 using Dapper;
 using Microsoft.Extensions.Options;
-using Feedbag.Models;
+using Elzar.Models;
 
-namespace Feedbag.DataAccess.Repositories
+namespace Elzar.DataAccess.Repositories
 {
 
     public class CookingProcedureRepository : ICookingProcedureRepository
@@ -14,7 +14,7 @@ namespace Feedbag.DataAccess.Repositories
         private readonly IOptions<ConnectionStrings> settings;
 
         private SQLiteConnection DatabaseConnection(){
-           return new SQLiteConnection(this.settings.Value.FeedbagDatabase);
+           return new SQLiteConnection(this.settings.Value.ElzarDatabase);
         }
 
         public CookingProcedureRepository(IOptions<ConnectionStrings> settings)

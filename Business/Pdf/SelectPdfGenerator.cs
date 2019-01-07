@@ -1,7 +1,7 @@
 using System.IO;
 using SelectPdf;
 
-namespace Feedbag.Pdf{
+namespace Elzar.Pdf{
     public class SelectPdfGenerator : IPdfGenerator
     {
         public Stream Generate(string path)

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Feedbag.DataAccess.Entites;
+using Elzar.DataAccess.Entites;
 
-namespace Feedbag.DataAccess.Repositories{
+namespace Elzar.DataAccess.Repositories{
     public interface ICookingProcedureRepository{
         Task<IEnumerable<CookingProcedureStep>> GetAllByRecipeId(int id);
         void Update(CookingProcedureStep step);

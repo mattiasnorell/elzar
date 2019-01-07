@@ -1,4 +1,4 @@
-namespace Feedbag.DataAccess.Entites
+namespace Elzar.DataAccess.Entites
 {
     public class Ingredient{
         public int Id {get;set;}

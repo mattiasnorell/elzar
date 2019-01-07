@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Feedbag.Models;
-using Feedbag.DataAccess.Repositories;
-using Feedbag.Business.Mappers;
+using Elzar.Models;
+using Elzar.DataAccess.Repositories;
+using Elzar.Business.Mappers;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Feedbag.Business.Providers{
+namespace Elzar.Business.Providers{
     public class RecipeProvider : IRecipeProvider
     {
         private readonly IRecipeRepository recipeRepository;

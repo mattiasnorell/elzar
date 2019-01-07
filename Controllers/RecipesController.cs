@@ -5,17 +5,17 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Feedbag.Business.Parser;
-using Feedbag.DataAccess.Providers;
-using Feedbag.Business.Scraper;
-using Feedbag.DataAccess.Entites;
-using Feedbag.Business.Providers;
-using Feedbag.Models;
-using Feedbag.Pdf;
+using Elzar.Business.Parser;
+using Elzar.DataAccess.Providers;
+using Elzar.Business.Scraper;
+using Elzar.DataAccess.Entites;
+using Elzar.Business.Providers;
+using Elzar.Models;
+using Elzar.Pdf;
 using Microsoft.AspNetCore.Mvc;
-using Feedbag.Business.Mappers;
+using Elzar.Business.Mappers;
 
-namespace Feedbag.Controllers
+namespace Elzar.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

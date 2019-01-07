@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Feedbag.Models;
+using Elzar.Models;
 
-namespace Feedbag.Business.Providers{
+namespace Elzar.Business.Providers{
     public interface IRecipeProvider{
         Task<RecipeDto> Get(int id);
         Task<IEnumerable<RecipeDto>> GetAll();

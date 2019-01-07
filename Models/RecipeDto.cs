@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Feedbag.Models {
+namespace Elzar.Models {
     public class RecipeDto {
         public string Title{get;set;}
         public string Image{get;set;}

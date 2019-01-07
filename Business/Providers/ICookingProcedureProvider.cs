@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Feedbag.Models;
+using Elzar.Models;
 
-namespace Feedbag.Business.Providers{
+namespace Elzar.Business.Providers{
     public interface ICookingProcedureProvider{
         Task<IEnumerable<CookingProcedureDto>> GetAllByRecipeId(int id);
         void Save(CookingProcedureDto recipe);

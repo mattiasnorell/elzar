@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Feedbag.Models {
+namespace Elzar.Models {
     public class IngredientDto {
         public int Id {get;set;}
         public string Amount{get;set;}

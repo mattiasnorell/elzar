@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Feedbag.DataAccess.Entites;
+using Elzar.DataAccess.Entites;
 
-namespace Feedbag.Business.Parser{
+namespace Elzar.Business.Parser{
     public class IngredientParser : IIngredientParser
     {
         private readonly string[] validUnits = {

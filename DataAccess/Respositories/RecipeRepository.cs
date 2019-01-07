@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Threading.Tasks;
-using Feedbag.DataAccess.Entites;
+using Elzar.DataAccess.Entites;
 using Dapper;
-using Feedbag.Models;
+using Elzar.Models;
 using Microsoft.Extensions.Options;
 
-namespace Feedbag.DataAccess.Repositories
+namespace Elzar.DataAccess.Repositories
 {
 
     public class RecipeRepository : IRecipeRepository
@@ -14,13 +14,13 @@ namespace Feedbag.DataAccess.Repositories
         private readonly Microsoft.Extensions.Options.IOptions<ConnectionStrings> settings;
 
         private SQLiteConnection DatabaseConnection(){
-           /* if (!System.IO.File.Exists(this.settings.Value?.FeedbagDatabase))
+           /* if (!System.IO.File.Exists(this.settings.Value?.ElzarDatabase))
             {
                 throw new Exception("Database not found");
                 //this.CreateDatabase();
             } */
             
-            return new SQLiteConnection(this.settings.Value.FeedbagDatabase);
+            return new SQLiteConnection(this.settings.Value.ElzarDatabase);
         }
 
         public RecipeRepository(IOptions<ConnectionStrings> settings)

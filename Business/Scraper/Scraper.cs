@@ -2,7 +2,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace Feedbag.Business.Scraper{
+namespace Elzar.Business.Scraper{
     public class Scraper:IScraper{
         public string Run(string path){
             using(var client = new WebClient()){

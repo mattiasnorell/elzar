@@ -1,6 +1,6 @@
-using Feedbag.DataAccess.Entites;
+using Elzar.DataAccess.Entites;
 
-namespace Feedbag.DataAccess.Providers{
+namespace Elzar.DataAccess.Providers{
     public interface ISiteSettingsProvider{
         SourceSite GetSourceSiteSettings(string id);
     }

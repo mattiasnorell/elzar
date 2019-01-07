@@ -1,8 +1,8 @@
-using Feedbag.Business.Parser;
-using Feedbag.DataAccess.Entites;
-using Feedbag.Models;
+using Elzar.Business.Parser;
+using Elzar.DataAccess.Entites;
+using Elzar.Models;
 
-namespace Feedbag.Business.Mappers{
+namespace Elzar.Business.Mappers{
     public interface IIngredientMapper{
         IngredientDto ToDto(Ingredient recipe);
         Ingredient FromDto(UpdateIngredientDto recipe);

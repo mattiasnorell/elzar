@@ -1,8 +1,8 @@
-﻿using Feedbag.Business.Providers;
-using Feedbag.Models;
+﻿using Elzar.Business.Providers;
+using Elzar.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Feedbag.Controllers
+namespace Elzar.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

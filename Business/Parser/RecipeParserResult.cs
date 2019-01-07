@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Feedbag.Models;
+using Elzar.Models;
 
-namespace Feedbag.Business.Parser {
+namespace Elzar.Business.Parser {
     public class RecipeParserResult {
         public string Title{get;set;}
         public string Image{get;set;}

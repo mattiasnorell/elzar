@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Feedbag.DataAccess.Entites;
+using Elzar.DataAccess.Entites;
 using HtmlAgilityPack;
 
-namespace Feedbag.Business.Parser{
+namespace Elzar.Business.Parser{
     public class RecipeParser : IRecipeParser
     {
         private readonly IIngredientParser ingredientParser;

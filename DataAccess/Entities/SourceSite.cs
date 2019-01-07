@@ -1,6 +1,6 @@
 using System;
 
-namespace Feedbag.DataAccess.Entites{
+namespace Elzar.DataAccess.Entites{
     public class SourceSite{
         public Guid Id {get;set;}
         public string Url{get;set;}

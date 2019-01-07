@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
-using Feedbag.Pdf;
-using Feedbag.Business.Scraper;
-using Feedbag.Business.Parser;
-using Feedbag.Business.Mappers;
-using Feedbag.DataAccess.Providers;
-using Feedbag.DataAccess.Repositories;
-using Feedbag.Business.Providers;
+using Elzar.Pdf;
+using Elzar.Business.Scraper;
+using Elzar.Business.Parser;
+using Elzar.Business.Mappers;
+using Elzar.DataAccess.Providers;
+using Elzar.DataAccess.Repositories;
+using Elzar.Business.Providers;
 using Microsoft.AspNetCore.HttpOverrides;
-using Feedbag.Models;
+using Elzar.Models;
 
-namespace Feedbag
+namespace Elzar
 {
     public class Startup
     {

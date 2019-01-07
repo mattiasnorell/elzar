@@ -1,7 +1,7 @@
-using Feedbag.DataAccess.Entites;
-using Feedbag.Models;
+using Elzar.DataAccess.Entites;
+using Elzar.Models;
 
-namespace Feedbag.Business.Mappers{
+namespace Elzar.Business.Mappers{
     public interface ICookingProcedureMapper{
         CookingProcedureDto ToDto(CookingProcedureStep recipe);
         CookingProcedureStep FromDto(CookingProcedureDto recipe);

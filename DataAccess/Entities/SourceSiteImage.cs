@@ -1,4 +1,4 @@
-namespace Feedbag.DataAccess.Entites{
+namespace Elzar.DataAccess.Entites{
     public class SourceSiteImage{
         public string Path{get;set;}
         public string Attribute{get;set;}

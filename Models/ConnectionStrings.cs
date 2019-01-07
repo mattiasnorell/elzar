@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
-namespace Feedbag.Models {
+namespace Elzar.Models {
     public class ConnectionStrings {
-        public string FeedbagDatabase{get;set;}
+        public string ElzarDatabase{get;set;}
     }
 }

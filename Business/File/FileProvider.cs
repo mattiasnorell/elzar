@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Feedbag.File{
+namespace Elzar.File{
     public class FileProvider: IFileProvider{
         public void Save(Stream stream, string fileName){
 

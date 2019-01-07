@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Feedbag.DataAccess.Entites;
+using Elzar.DataAccess.Entites;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Feedbag.DataAccess.Providers{
+namespace Elzar.DataAccess.Providers{
 
     // HARDCODED AS OF NOW. DATABASE COMING IN THE FUTURE
     public class SiteSettingsProvider : ISiteSettingsProvider
