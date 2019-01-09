@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Elzar.Business.Parser;
 using Elzar.DataAccess.Providers;
 using Elzar.Business.Scraper;
-using Elzar.DataAccess.Entites;
 using Elzar.Business.Providers;
 using Elzar.Models;
 using Elzar.Pdf;
 using Microsoft.AspNetCore.Mvc;
 using Elzar.Business.Mappers;
+using Elzar.FileHandlers;
 
 namespace Elzar.Controllers
 {
@@ -30,6 +27,7 @@ namespace Elzar.Controllers
         private readonly IScraper scraper;
         private readonly IRecipeParser RecipeParser;
         private readonly ISiteSettingsProvider siteSettingsProvider;
+        private readonly IFileHandler fileHandler;
 
         public RecipesController(
             ICookingProcedureProvider cookingProcedureProvider,
@@ -40,7 +38,8 @@ namespace Elzar.Controllers
             IPdfGenerator pdfGenerator,
             IScraper scraper, 
             IRecipeParser RecipeParser, 
-            ISiteSettingsProvider siteSettingsProvider
+            ISiteSettingsProvider siteSettingsProvider,
+            IFileHandler fileHandler
         ){
             this.cookingProcedureProvider = cookingProcedureProvider;
             this.ingredientProvider = ingredientProvider;
@@ -51,6 +50,7 @@ namespace Elzar.Controllers
             this.scraper = scraper;
             this.RecipeParser = RecipeParser;
             this.siteSettingsProvider = siteSettingsProvider;
+            this.fileHandler = fileHandler;
         }
 
         [HttpGet]
@@ -145,8 +145,9 @@ namespace Elzar.Controllers
                 var stepDto = new CookingProcedureDto{RecipeId = id, Step = step };
                 this.cookingProcedureProvider.Save(stepDto);
             }
-                            
-            return Ok();
+
+            this.fileHandler.Download(recipe.Image, id.ToString() + ".jpg");
+            return Ok(id);
         }
 
         [HttpPut("{id}")]
@@ -160,6 +161,7 @@ namespace Elzar.Controllers
         {
             this.cookingProcedureProvider.DeleteByRecipeId(id);
             this.ingredientProvider.DeleteByRecipeId(id);
+            this.fileHandler.Delete(id);
             this.recipeProvider.Delete(id);
         }
     }

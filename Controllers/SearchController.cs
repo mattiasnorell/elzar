@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Elzar.Business.Providers;
 using Elzar.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +9,11 @@ namespace Elzar.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TagsController : ControllerBase
+    public class SearchController : ControllerBase
     {
         private readonly IRecipeProvider recipeProvider;
-
-        public TagsController(
+     
+        public SearchController(
             IRecipeProvider recipeProvider
         ){
             this.recipeProvider = recipeProvider;

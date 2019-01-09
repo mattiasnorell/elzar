@@ -67,8 +67,10 @@ namespace Elzar.Business.Parser{
             var ingredient = new IngredientParserResult();
             var split = input.Split(' ').Where(e => !string.IsNullOrWhiteSpace(e)).ToArray();
             
-            if(split.Length > 1 && split[0] == "0"){
+            if(split.Length == 2 && split[0] == "0"){
                 ingredient.Name = split[1];
+            }else if(split.Length == 3 && split[0] == "0"){
+                ingredient.Name = split[2];
             }else if(split.Length > 1 && IsAmountValid(split[0])){
                 var hasUnit = validUnits.Contains(split[1]);
 
