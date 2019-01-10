@@ -61,7 +61,7 @@ namespace Elzar.DataAccess.Repositories
             using (var conn = this.dbConnection.GetOpenConnection())
             {
                 if(recipe.Id == 0){
-                    return conn.QueryFirst<int>(@"INSERT INTO Recipes (Title, Image, Description, SourceUrl, Tags, CreatedAtUtc, UpdatedAtUtc) VALUES (@Title, @Image, @Description, @SourceUrl, @Tags, @CreatedAtUtc, @UpdatedAtUtc); select last_insert_rowid()", recipe);
+                    return conn.QueryFirst<int>(@"INSERT INTO Recipes (Title, Image, Description, SourceUrl, Tags, CreatedAtUtc, UpdatedAtUtc) VALUES (@Title, @Image, @Description, @SourceUrl, @Tags, @CreatedAtUtc, @UpdatedAtUtc); select LAST_INSERT_ID()", recipe);
                 }else{
                     conn.Execute(@"UPDATE Recipes SET Title = @Title, Image = @Image, Description = @Description, SourceUrl = @SourceUrl, Tags = @Tags, UpdatedAtUtc = @UpdatedAtUtc WHERE Id = @id", recipe);
 

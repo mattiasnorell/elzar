@@ -1,4 +1,4 @@
-CREATE TABLE `HowToSteps` (
+CREATE TABLE `CookingProcedures` (
 	`Id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`RecipeId`	INTEGER,
 	`Step`	TEXT

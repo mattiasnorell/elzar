@@ -68,7 +68,7 @@ namespace Elzar
             builder.RegisterType<RecipeMapper>().As<IRecipeMapper>();
 
             // Dataaccess
-            builder.RegisterType<SQLiteConnectionProvider>().As<IDbConnectionProvider>();
+            builder.RegisterType<MySqlConnectionProvider>().As<IDbConnectionProvider>();
 
             builder.RegisterType<IngredientRepository>().As<IIngredientRepository>();
             builder.RegisterType<CookingProcedureRepository>().As<ICookingProcedureRepository>();

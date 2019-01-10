@@ -20,7 +20,7 @@ namespace Elzar.DataAccess.Repositories
         {
             using (var conn = this.dbConnection.GetOpenConnection())
             {
-                return await conn.QueryAsync<CookingProcedureStep>(@"select * from HowToSteps where RecipeId = @id", new { id });
+                return await conn.QueryAsync<CookingProcedureStep>(@"select * from CookingProcedures where RecipeId = @id", new { id });
             }
         }
 
@@ -28,7 +28,7 @@ namespace Elzar.DataAccess.Repositories
         {
             using (var conn = this.dbConnection.GetOpenConnection())
             {
-                await conn.ExecuteAsync(@"DELETE FROM HowToSteps WHERE Id = @id", new { id });
+                await conn.ExecuteAsync(@"DELETE FROM CookingProcedures WHERE Id = @id", new { id });
             }
         }
 
@@ -36,7 +36,7 @@ namespace Elzar.DataAccess.Repositories
         {
             using (var conn = this.dbConnection.GetOpenConnection())
             {
-                await conn.ExecuteAsync(@"DELETE FROM HowToSteps WHERE RecipeId = @id", new { id });
+                await conn.ExecuteAsync(@"DELETE FROM CookingProcedures WHERE RecipeId = @id", new { id });
             }
         }
 
@@ -45,9 +45,9 @@ namespace Elzar.DataAccess.Repositories
             using (var conn = this.dbConnection.GetOpenConnection())
             {
                 if(step.Id == 0){
-                    conn.Execute(@"INSERT INTO HowToSteps (RecipeId, Step) VALUES (@RecipeId, @Step)", step);
+                    conn.Execute(@"INSERT INTO CookingProcedures (RecipeId, Step) VALUES (@RecipeId, @Step)", step);
                 }else{
-                    conn.Execute(@"UPDATE HowToSteps SET Step = @Step WHERE Id = @Id", step);
+                    conn.Execute(@"UPDATE CookingProcedures SET Step = @Step WHERE Id = @Id", step);
                 }
             }
         }
